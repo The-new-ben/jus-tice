@@ -1,0 +1,12 @@
+name: Test Workflow
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Print a message
+        run: echo "This is a test GitHub Action."
