@@ -1,0 +1,26 @@
+# Ignore operating system files and logs
+*.log
+*.sql
+*.zip
+.DS_Store
+Thumbs.db
+
+# Ignore WordPress dynamic directories
+wp-content/uploads/
+wp-content/cache/
+wp-content/backups/
+wp-content/upgrade/
+
+# Ignore environment configuration files
+wp-config.php
+.env
+
+# Ignore dependencies and build artifacts
+node_modules/
+vendor/
+dist/
+build/
+
+# Ignore editor and IDE folders
+.idea/
+.vscode/
