@@ -1,0 +1,20 @@
+@import "bootstrap/bootstrap-grid";
+@import "bootstrap/_reboot";
+@import "bootstrap/_utilities-responsive";
+@import "bootstrap/_animation";
+@import "bootstrap/_dropdown";
+@import "bootstrap/_popover";
+@import "bootstrap/_modal";
+@import "bootstrap/_utilities";
+@import "bootstrap/_responsive-embed";
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

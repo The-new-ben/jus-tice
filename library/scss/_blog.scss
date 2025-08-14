@@ -1,0 +1,127 @@
+.blog,.single-post{
+
+}
+
+#blog-grid,#recent-posts{
+
+    article {
+        background: #fff;
+        padding: 0 20px 20px;
+        margin-bottom: 30px;
+        position: relative;
+        .date{
+            display: inline-block;
+            line-height: 1.6;
+            color: $primary-lightest;
+            font-size: 34px;
+            font-weight: 900;
+        }
+        h3 {
+            font-size: 16px;
+            font-weight:700;
+            margin-top:5px;
+            a {
+                color: $primary-color;
+            }
+            &:after {
+                content: '';
+                display: block;
+                width: 49px;
+                height:4px;
+                background: url('../images/small-dotes.png') right top;
+                margin: 15px 0 ;
+            }
+        }
+        .more {
+            display: block;
+            position: absolute;
+            left: 20px;
+            bottom:0px;
+            color: $brand-accent;
+            font-size: 28px;
+        }
+
+        &:hover{
+            @include prefix ((box-shadow:  0 0 12px 0 rgba(153,181,194,0.31)), webkit);
+           .caption h3 a{
+               text-decoration: none;
+           }
+        }
+    }
+
+}
+.single-post{
+    #main {
+        article {
+            background: #fff;
+            .image-container {
+                max-height: 350px;
+                overflow:hidden;
+                img {
+                    width:100%;
+                }
+            }
+            .entry-content {
+                padding: 40px;
+            }
+        }
+    }
+}
+.single-post,.single-articles{
+
+    #post-navigation{
+        padding-top:30px;
+       > div{
+           position:relative ;
+           > strong{
+               display: block;
+               font-size: 14px;
+               color:$brand-primary;
+           }
+
+       }
+        i{
+            position: absolute;
+            font-size: 40px;
+            top: 0;
+        }
+        .post-prev{
+            padding-right: 35px;
+            i{
+                right:-4px;
+            }
+        }
+        .post-next{
+            padding-left: 35px;
+            text-align: left;
+            i{left:-4px;}
+        }
+        a{
+            color: $secondary-color;
+
+            line-height: 1.3;
+            span{
+                display: block;
+                font-size:20px;
+                color:$brand-accent;
+            }
+            &:hover{
+                background-color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+}
+@include media-breakpoint-up(lg){
+    #blog-grid{
+       article:nth-child(-n+2){
+        }
+        .image-container{
+            max-height: 300px;
+            overflow:hidden;
+            img{
+                max-width: none;}
+        }
+    }
+}

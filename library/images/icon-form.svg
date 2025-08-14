@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="63px" height="63px" viewBox="0 0 63 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.1 (72631) - https://sketchapp.com -->
+    <title>noun_form_1423850</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-Box" transform="translate(-104.000000, -31.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-10" transform="translate(-1.000000, 31.000000)">
+                <g id="noun_form_1423850" transform="translate(105.000000, 0.000000)">
+                    <polygon id="Shape" points="1.57142857 1.57894737 42.4285714 1.57894737 42.4285714 2.36842105 44 2.36842105 44 0 0 0 0 60 2.35714286 60 2.35714286 58.4210526 1.57142857 58.4210526"></polygon>
+                    <rect id="Rectangle-path" x="8" y="10" width="17" height="2"></rect>
+                    <rect id="Rectangle-path" x="8" y="13" width="17" height="2"></rect>
+                    <rect id="Rectangle-path" x="16" y="21" width="27" height="2"></rect>
+                    <path d="M8,24 L14,24 L14,18 L8,18 L8,24 Z M9.5,19.5 L12.5,19.5 L12.5,22.5 L9.5,22.5 L9.5,19.5 Z" id="Shape"></path>
+                    <path d="M8,33 L14,33 L14,27 L8,27 L8,33 Z M9.5,28.5 L12.5,28.5 L12.5,31.5 L9.5,31.5 L9.5,28.5 Z" id="Shape"></path>
+                    <path d="M8,43 L14,43 L14,37 L8,37 L8,43 Z M9.5,38.5 L12.5,38.5 L12.5,41.5 L9.5,41.5 L9.5,38.5 Z" id="Shape"></path>
+                    <rect id="Rectangle-path" x="8" y="47" width="35" height="2"></rect>
+                    <rect id="Rectangle-path" x="8" y="52" width="22" height="2"></rect>
+                    <rect id="Rectangle-path" x="16" y="40" width="15" height="2"></rect>
+                    <polygon id="Shape" points="43 40 42.3020833 40 41 42 43 42"></polygon>
+                    <polygon id="Shape" points="40 30 16 30 16 32 38.4349182 32"></polygon>
+                    <polygon id="Shape" points="46.4285714 61.4210526 5.57142857 61.4210526 5.57142857 4.57894737 46.4285714 4.57894737 46.4285714 24.1515789 48 22.5726316 48 3 4 3 4 63 48 63 48 33.7326316 46.4285714 35.3115789"></polygon>
+                    <path d="M62.0029698,12.9383442 C60.6732489,11.6872186 58.5177712,11.6872186 57.1880504,12.9383442 L30.7025882,37.8658678 L29,39.4683057 L29,44 L33.8149195,44 L35.5175077,42.3975621 L45.1473466,33.3341735 L46.352779,32.1996475 L62.0165905,17.457219 C63.3330975,16.2036752 63.3270123,14.1848377 62.0029698,12.9383442 Z M33.1066428,42.4232011 L30.7025882,42.4232011 L30.7025882,40.1285101 L41.5378596,29.9305954 L43.9282934,32.1996475 L33.1066428,42.4232011 Z M60.7975374,16.3611515 L45.1337259,31.10358 L42.7364817,28.7768402 L58.4002932,14.0344117 C58.8309527,13.6290846 59.4586526,13.4707864 60.0469445,13.6191464 C60.6352364,13.7675064 61.0947446,14.1999853 61.252377,14.7536724 C61.4100093,15.3073595 61.2418176,15.8981366 60.8111581,16.3034637 L60.7975374,16.3611515 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

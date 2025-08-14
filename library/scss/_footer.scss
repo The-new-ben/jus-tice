@@ -1,0 +1,198 @@
+#site-footer {
+    .search-bar{
+        background-color:#456096;
+        background-image: radial-gradient(33% 100%, rgba(0, 0, 0, 0.00) 28%, rgba(0, 0, 0, 0.30) 99%);
+    }
+    background: #0D1525;
+    .widget-title {
+        font-size: 24px;
+        color: $primary_lightest;
+        font-weight: 900;
+        margin-bottom: 20px;
+    }
+    #footer-content {
+        padding: 50px 0;
+
+        color: #fff;
+        &:not(strong) {
+            font-weight: 300;
+        }
+        @include media-breakpoint-down(sm) {
+            padding: 40px 0 20px;
+
+            #footer-site-info , #footer-about{
+                margin-bottom: 30px;
+            }
+        }
+
+        #footer-about {
+            a {
+                color: $primary-lighter;
+                font-weight: 600;
+            }
+        }
+        #footer-site-info {
+
+            strong {
+                display: inline-block;
+                width: 80px;
+            }
+
+        }
+        #footer-contact {
+            .gform_wrapper {
+                input:not([type="submit"]), textarea,select {
+                    background-color: transparent;
+                    color: $primary_light;
+
+                }
+                input:not([type="submit"]), textarea{
+                    &:not(:focus) {
+                        border: 1px solid rgba($white, 0.3);
+                    }
+                }
+                label {
+                    color: $primary_lighter;
+                    &:not(.no-float) {
+                        right: 20px;
+                    }
+                    &.show {
+                        background: #0D1525;
+                        color: $brand-accent;
+                        padding: 4px;
+                    }
+                }
+                .select-container {
+                   select{
+                       border: 1px solid rgba($white, 0.3);
+
+                   }
+                   &.show {
+                        label {
+                            background: #0D1525;
+                            color: $brand-accent;
+                            padding: 4px;
+                        }
+                        select {
+                            border-color: $brand-accent;
+                        }
+                    }
+
+                }
+                .gform_button {
+                    float: left;
+                    height: 40px;
+                    width:50%;
+                    margin-top: 0;
+                    background: $primary_light;
+                    -webkit-border-radius: 40px;
+                    -moz-border-radius: 40px;
+                    border-radius: 40px;
+                }
+            }
+
+        }
+
+        @include media-breakpoint-up(md) {
+            #footer-contact .gform_wrapper {
+                .gform_fields {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin: 0 -6px;
+                    .gfield {
+                        padding: 0 6px;
+                    }
+                }
+
+            }
+            #footer-site-info {
+                padding: 0 30px;
+            }
+        }
+    }
+    #footer-menus {
+        .container {
+            padding: 40px 0;
+            border-top: 1px solid $primary-light
+        }
+        > div {
+
+            @include media-breakpoint-down(sm) {
+                margin-bottom: 30px;
+            }
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin-bottom: 7px;
+                flex: 0 0 100%;
+
+                a {
+                    color: #fff;
+                    font-weight: 300;
+                }
+            }
+        }
+        @include media-breakpoint-up(sm) {
+          ul li{
+              flex: 0 0 50%;
+              max-width:50%;
+          }
+        }
+        @include media-breakpoint-down(sm) {
+            .widget-title{
+                margin-top:30px;
+            }
+        }
+    }
+    #footer-bottom-bar {
+        font-size: 15px;
+        > .container{
+            border-top: 1px solid rgba($white, 0.2);
+        }
+        &, a {
+            color: rgba($white, 0.7)
+        }
+        text-align: center;
+        .footer-credits {
+            padding: 30px 0;
+
+        }
+
+        .credits-menu {
+            ul {
+                list-style: none;
+                display: flex;
+                justify-content: center;
+                padding: 0;
+                li {
+                    padding: 0 10px;
+                    position: relative;
+                    &:not(:first-child):before {
+                        content: '';
+                        position: absolute;
+                        right: 0;
+                        width: 1px;
+                        height: 12px;
+                        top: 50%;
+                        margin-top: -6px;
+                        border-right: 1px solid;
+                    }
+                }
+            }
+        }
+        .darolink {
+            background: url('../images/daro-icon.png') no-repeat left center;
+            padding-left: 24px;
+        }
+        @include media-breakpoint-up(sm) {
+            .copyrights {
+                text-align: left;
+            }
+        }
+    }
+}

@@ -1,0 +1,411 @@
+#home-page {
+  #home-features {
+    .feature-box {
+      margin-bottom: 2px;
+
+      .container {
+        width: auto
+      }
+
+      .caption {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.00) 32%, rgba(0, 0, 0, 0.50) 100%);
+        color: #fff
+      }
+
+      h3 {
+        text-align: center;
+        display: inline-block;
+        font-weight: 900;
+        font-size: 30px;
+
+        &:after {
+          content: '';
+          display: block;
+          width: 70px;
+          margin: 10px auto 0;
+          height: 22px;
+          background: url('../images/red-dotes.png') repeat top right;
+        }
+      }
+
+      &:not(.main-feature) {
+        .caption {
+          padding-bottom: 30px;
+          text-align: center;
+        }
+      }
+
+    }
+
+    > .row {
+      > .col-md-6 {
+        &:first-child {
+          .feature-box {
+
+          }
+
+        }
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      border-top: 2px solid #fff;
+      position: relative;
+      height: calc(100vh - 232px);
+      overflow: hidden;
+      .feature-box {
+        overflow: hidden;
+        margin-bottom: 0;
+
+        img {
+          height: 100%;
+          max-width: none;
+        }
+      }
+      > .row {
+        > .col-md-6 {
+          &:first-child {
+            border-left: 1.5px solid #fff;
+
+            .feature-box {
+              h3 {
+                font-size: 60px;
+
+                &:after {
+                  height: 11px;
+                  margin: 20px 0;
+                }
+              }
+
+              .caption-text {
+                font-size: 22px;
+                font-weight: 600;
+              }
+            }
+
+          }
+
+          &:last-child {
+            border-right: 1.5px solid #fff;
+
+            .row {
+              .feature-box {
+                height: calc(50vh - 117px);
+
+                &:nth-child(-n+2) {
+                  border-bottom: 1.5px solid #fff;
+                }
+
+                &:nth-child(n+3) {
+                  border-top: 1.5px solid #fff;
+                }
+
+                &:nth-child(odd) {
+                  border-left: 1.5px solid #fff;
+                }
+
+                &:nth-child(even) {
+                  border-right: 1.5px solid #fff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    @include media-breakpoint-down(sm) {
+    }
+  }
+
+  #home-about {
+    .row {
+      align-items: center;
+    }
+
+    .caption {
+      .desc {
+        font-size: 20px;
+        padding-left: 8%;
+      }
+
+      .btn {
+        margin-top: 40px;
+      }
+    }
+
+    .video {
+      position: relative;
+
+      #play-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+
+        &:after, &:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include prefix((transform:translate(-50%, -50%)), webkit ms);
+          z-index: 3;
+        }
+
+        &:before {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background: rgba($black, 0.5);
+        }
+
+        &:after {
+          width: 0;
+          height: 0;
+          border-top: 17px solid transparent;
+          border-bottom: 17px solid transparent;
+          border-left: 25px solid #FFF;
+          MARGIN-LEFT: 3PX;
+        }
+      }
+    }
+
+  }
+
+  #articles {
+    background: $gray-lightest;
+
+    .nav-tabs {
+      .nav-item {
+        a {
+          color: $brand-darker
+        }
+
+        &:hover {
+          a {
+            background: #fff;
+          }
+        }
+
+        &.active a {
+          background: $brand-accent;
+          border-color: $brand-accent;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  #law-cats {
+    .item {
+      padding: 2px 10px;
+      margin-bottom: 20px;
+
+      .cat-box {
+        background-color: $primary_light;
+        color: #fff;
+        text-align: center;
+        padding-bottom: 60px;
+      }
+
+      .caption {
+        padding: 30px 20px 20px;
+
+        img {
+          margin-bottom: 14px;
+        }
+
+        h3 {
+          font-size: 24px;
+          font-weight: 700;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+
+      .readmore {
+        display: block;
+        background: $primary_color;
+        font-weight: 700;
+        line-height: 45px;
+        position: absolute;
+        width: calc(100% - 20px);
+        bottom: 0;
+
+        i {
+          margin-right: 3px;
+        }
+      }
+    }
+  }
+
+  #lawyers {
+    background-color: $primary_color;
+
+    .nav-tabs {
+      .nav-item {
+        a.nav-link {
+          color: $primary_lightest;
+          &:hover {
+            color: #fff;
+            border-color: transparent;
+          }
+        }
+
+        &.active a {
+          background: $primary_lightest;
+          color: $primary_dark_color;
+        }
+      }
+    }
+
+    article {
+      text-align: center;
+
+      .lawyer-card {
+        background: none;
+      }
+    }
+  }
+
+  #files {
+    h3 {
+      background: #FFFFFF;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 1px 0 #5272B2;
+      font-size: 20px;
+      font-weight: 600;
+
+    }
+  }
+
+  #addional-links {
+    .caption {
+      line-height: 1.6;
+    }
+
+    .links {
+      > p, > a {
+        min-width: 25%;
+        padding: 5px 15px;
+      }
+
+      a {
+        color: $gray;
+        text-decoration: underline;
+        line-height: 1.4;
+        display: inline-block;
+      }
+    }
+  }
+
+  #recent-posts {
+    background: $primary_lightest;
+
+    .title {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      margin-top: 10px;
+    }
+  }
+
+  #new {
+    .title {
+      font-size: 36px;
+    }
+
+    .caption {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    #lawyers {
+      article {
+        width: 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+        .lawyer-card{
+          height: 100%;
+        }
+      }
+    }
+    #law-cats {
+      .item {
+        flex: 0 0 50%;
+
+        .cat-box {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+
+  @include media-breakpoint-up(lg) {
+
+    #law-cats {
+      .item {
+        flex: 0 0 20%;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+  }
+  @include media-breakpoint-up(xxl) {
+
+  }
+  @include media-breakpoint-down(md) {
+
+    #files {
+      [class^=col-] {
+        width: 100%;
+
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+    #addional-links {
+      padding: 0 15px;
+    }
+    .faq {
+      margin-top: 40px;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+
+  }
+  @include media-breakpoint-down(xs) {
+    #lawyers article {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #law-cats {
+      .item {
+        flex: 0 0 100%;
+
+        img {
+          max-height: 180px;
+        }
+      }
+    }
+    #addional-links .links > p {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+}

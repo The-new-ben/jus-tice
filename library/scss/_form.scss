@@ -1,0 +1,331 @@
+form {
+    .input-container {
+        position: relative;
+    }
+    input:not([type="submit"]):not([type="checkbox"]):not([type="button"]), textarea, select {
+        border: 1px solid $primary_lightest;
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 3px;
+        &:focus {
+            outline: 0;
+            border-color: $brand-accent;
+        }
+    }
+    input:not([type="submit"]):not([type="checkbox"]), select {
+        height: 46px;
+    }
+    textarea {
+        height: 110px;
+        width: 100%;
+    }
+    &:not(.searchandfilter) {
+        select{
+            background: #fff;
+            padding-right:12px;
+            color:$secondary_color
+        }
+        label {
+            color: $secondary_color;
+            &:not(.no-float) {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                z-index: 0;
+                @include prefix((transition: all 0.2s ease), webkit);
+                @include prefix((transform:translateY(-50%)), webkit ms);
+                margin: 0;
+                line-height: 1;
+                &.on, &.show {
+                    top: -0;
+                    font-weight: 700;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+    .textarea, .ginput_container_textarea {
+        label:not(.show):not(.on) {
+            top: 15px;
+            @include prefix((transform:translateY(0)), webkit ms)
+        }
+    }
+
+    .select-container {
+        position: relative;
+        label {
+            opacity: 0;
+            top: 0px;
+
+        }
+        &.show {
+            label {
+                opacity: 1;
+                font-size: 11px;
+                font-weight: 700;
+                top: 0;
+                background: $brand-accent;
+                color:#fff;
+                padding:4px;
+                border-radius: 2px;
+            }
+            select {
+                border-color: $brand-accent;
+            }
+
+        }
+
+    }
+    .select-container .bootstrap-select.btn-group .dropdown-toggle, .bootstrap-select.btn-group .dropdown-toggle {
+        border: 0;
+        font-size: 16px;
+        line-height: 44px;
+
+    }
+    .dropdown-toggle::after {
+        content: "\e90d";
+        font-family: 'aeromix' !important;
+        speak: none;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        color: $secondary_color;
+        margin: 0;
+        border: 0;
+        width: 42px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .bootstrap-select {
+        .dropdown-menu {
+            box-shadow: 0 0 10px 0 rgba(153, 181, 194, 0.31);
+            & .inner li {
+                a {
+                    font-size: 16px;
+                    color: $gray;
+                    border-bottom: 1px solid $foggy;
+                    &:hover {
+                        background: $brand-accent;
+                    }
+                }
+                &.selected {
+                    a {
+                        background: $brand-accent;
+                    }
+                    .check-mark {
+                        display: block;
+                        float: right;
+                        padding-left: 11px;
+                        line-height: 25px;
+                        font-size: 12px;
+
+                        &:before {
+                            content: "\e90a";
+                            font-family: 'aeromix' !important;
+                            speak: none;
+
+                        }
+                    }
+                }
+            }
+
+        }
+        &.dropup {
+            position: initial;
+            .dropdown-toggle::after {
+                border-top: 0;
+                border-bottom: 0;
+            }
+        }
+
+    }
+    .checkbox {
+        position: relative;
+        padding: 0 27px 0 0;
+        overflow: hidden;
+        input[type=checkbox] {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+
+            & + label {
+                width: 15px;
+                height: 15px;
+                margin-top: 0;
+                cursor: pointer;
+                position: absolute;
+                top: 2px;
+                right: 0;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+                border: 1px solid $primary_color;
+                background: rgba($primary_color, 0.07);
+                i {
+                    opacity: 0;
+                    position: absolute;
+                    top: 2px;
+                    right: 0;
+                    font-size: 12px;
+                    color: #fff
+                }
+            }
+
+            &:checked + label {
+                background: $primary_color;
+                i {
+                    opacity: 1;
+                }
+            }
+
+        }
+    }
+}
+
+.gform_wrapper {
+    &, ul {
+        padding: 0;
+    }
+    .gform_footer {
+        padding: 0 !important;
+    }
+    .gform_heading {
+        margin-bottom: 20px;
+    }
+
+    li {
+        position: relative;
+        list-style: none;
+        margin-bottom: 25px;
+        input {
+            outline: none;
+            padding: 0 10px;
+        }
+
+        label {
+            color: $secondary_color;
+            &.show {
+                top: 0;
+                background: $brand-accent;
+                color:#fff;
+                padding: 4px;
+                border-radius: 2px;
+            }
+        }
+
+    }
+
+    .gform_button {
+        color: #fff;
+        background-color: #002c3d;
+        border: none;
+        height: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center !important;
+        padding: 0 35px;
+        cursor: pointer;
+    }
+    textarea {
+
+        &.large {
+            height: 120px;
+        }
+
+    }
+    .validation_error {
+        color: $brand-alert;
+        margin: 15px 0 25px;
+        font-weight: 700;
+    }
+    .gfield_description.validation_message {
+        color: $brand-alert;
+        font-size: 13px;
+    }
+    &.gform_validation_error {
+        li.gfield {
+            label {
+                top: 0 !important;
+                background: #fff;
+                padding: 4px 6px;
+                font-weight: 700;
+                font-size: 11px;
+            }
+            &.textarea label {
+                top: -8px !important;
+            }
+        }
+
+    }
+    &.boxed_wrapper {
+        background: $white;
+        border: 1px solid $foggy-dark;
+        @include prefix((box-shadow:0 0 10px 0 rgba(153, 181, 194, 0.31)), webkit);
+        border-radius: 4px;
+        padding: 30px 50px;
+        position: relative;
+    }
+    &.flex_wrapper {
+        .gform_fields {
+            display: flex;
+            flex-wrap: wrap;
+            .gfield {
+                padding-right: 0;
+            }
+        }
+    }
+}
+
+.searchandfilter {
+    padding: 30px 0;
+
+    select {
+        height: 40px;
+        border-radius: 3px;
+        background: none;
+        border: 1px solid $primary_light;
+        color: $primary_light;
+    }
+    input[type="submit"] {
+        background: $brand-accent;
+        color: #fff;
+        @include prefix((box-shadow:0 4px 8px rgba($black, 0.15)), webkit);
+        font-weight: 700;
+        border: 0;
+        border-radius: 30px;
+        height: 40px;
+        padding: 0 40px;
+        padding: 0 40px;
+    }
+}
+
+footer {
+    .searchandfilter {
+        select {
+            border: 1px solid #fff;
+            color: #fff;
+            font-weight: 700;
+        }
+    }
+
+@include media-breakpoint-up(lg){
+    .searchandfilter > ul {
+        display: flex;
+        > li {
+            margin-left: 20px;
+        }
+
+    }}
+}

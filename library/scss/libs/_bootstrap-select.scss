@@ -1,0 +1,67 @@
+.select-container {
+    position: relative;
+    display: block;
+}
+
+.selectpicker {
+    //display: none;
+}
+.bootstrap-select {
+    width: auto !important;
+
+    &.btn-group {
+        .dropdown-toggle {
+            padding: 0;
+            color: $primary_color;
+            font-size: 26px;
+            background: transparent !important;
+
+            .filter-option {
+                float: right;
+                width: auto !important;
+                margin-left: 5px;
+            }
+
+            &:focus {
+                outline: 0 !important;
+                border: 0 !important;
+            }
+            &::-moz-focus-inner {
+                outline: 0 !important;
+                border: 0 !important;
+            }
+        }
+    }
+
+    .dropdown-menu {
+        &.open {
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        &.inner {
+            text-align: right;
+
+            li {
+                a {
+                    display: block;
+                    color: $primary_dark_color;
+                    padding: 3px 10px 5px 0;
+                    font-size: 20px;
+
+                    &:hover {
+                        text-decoration: none;
+                        background-color: $primary_color;
+                    }
+                }
+            }
+        }
+    }
+
+    select {
+        pointer-events: none;
+    }
+    &.open > .dropdown-menu {
+        display: block;
+    }
+}
