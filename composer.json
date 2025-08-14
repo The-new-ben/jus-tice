@@ -1,0 +1,9 @@
+{
+  "name": "the-new-ben/jus-tice-theme",
+  "description": "WordPress theme for Jus-tice",
+  "type": "project",
+  "require": {
+    "php": ">=7.4",
+    "composer/installers": "^2.0"
+  }
+}
