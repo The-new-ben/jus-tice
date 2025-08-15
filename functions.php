@@ -4,21 +4,16 @@
  * URL: http://themble.com/bones/
  *
  * זהו קובץ ה-functions.php של התבנית, המכיל הגדרות ופעולות ליבה.
- * חלק מהפונקציות (bones.php) נטענות דרך require_once למטה.
  */
 
 /* ---------------------------------------------------------------------------
  * 1. REQUIRE או INCLUDE לקבצים נוספים
  * --------------------------------------------------------------------------- */
 
-require_once get_template_directory() . '/theme-parts/custom-post-types.php'; // CPTs מותאמים
-require_once get_template_directory() . '/library/bones.php';                 // ליבת Bones
-
-// אם תרצו לאפשר התאמות פאנל אדמין בהמשך
-// require_once get_template_directory() . '/library/admin.php';
-
-require_once get_template_directory() . '/inc/acf-compatibility.php';
+require_once get_template_directory() . '/inc/enqueue-scripts.php';
+require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/helpers.php';
+require_once get_template_directory() . '/inc/acf-compatibility.php';
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
  * --------------------------------------------------------------------------- */
