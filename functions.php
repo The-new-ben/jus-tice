@@ -19,6 +19,7 @@ require_once get_template_directory() . '/library/bones.php';                 //
 
 require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
+require_once get_template_directory() . '/inc/enqueue-scripts.php';
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
  * --------------------------------------------------------------------------- */
@@ -35,9 +36,6 @@ function bones_ahoy() {
   add_filter( 'wp_head', 'bones_remove_wp_widget_recent_comments_style', 1 );
   add_action( 'wp_head', 'bones_remove_recent_comments_style', 1 );
   add_filter( 'gallery_style', 'bones_gallery_style' );
-
-  // טעינת סקריפטים וסגנונות
-  add_action( 'wp_enqueue_scripts', 'bones_scripts_and_styles', 999 );
 
   // תמיכה בפיצ'רים של וורדפרס (תמונות פיצ'ר, פורמטים וכו')
   bones_theme_support();
