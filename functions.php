@@ -165,22 +165,6 @@ add_filter( 'the_excerpt', 'div_wrapper' );
 add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
 
 /* ---------------------------------------------------------------------------
- * 11. פונקציית excerpt מותאמת
- * --------------------------------------------------------------------------- */
-function excerpt($limit) {
-    $excerpt = explode(' ', get_the_excerpt(), $limit);
-    if (count($excerpt) >= $limit) {
-        array_pop($excerpt);
-        $excerpt = implode(" ",$excerpt).'...';
-    } else {
-        $excerpt = implode(" ",$excerpt);
-    }
-    // הסרה של Shortcodes (סינון נוסף לסניטציה/אבטחה לפי צורך)
-    $excerpt = preg_replace('`[[^]]*]`','',$excerpt);
-    return $excerpt;
-}
-
-/* ---------------------------------------------------------------------------
  * 12. תמיכה בהעלאת SVG (הוספה ל-MIME Types)
  * --------------------------------------------------------------------------- */
 function cc_mime_types($mimes) {

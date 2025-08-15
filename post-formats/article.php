@@ -32,12 +32,7 @@
 					</div>
 					<div class="text-holder">
 						<a href="<?php the_permalink(); ?>"><?php the_title('<h3>','</h3>'); ?>	</a>
-						<?php
-						$excerpt = get_the_excerpt();
-						$excerpt = substr($excerpt, 0, 260);
-						$result = substr($excerpt, 0, strrpos($excerpt, ' '));
-						echo '<p>' . $result . '...</p>';
-						?>
+                                                <p><?php echo wp_trim_words(get_the_excerpt(), 40, '...'); ?></p>
 					</div>
 						
 					
