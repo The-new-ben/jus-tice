@@ -61,7 +61,7 @@
                 <div class="container">
                     <div class="d-sm-flex justify-content-end align-items-center">
                        <!--ul class="contact-details d-none d-md-flex">
-                           <li><?php echo get_field('site_address1', 'option'); ?></li>
+                           <li><?php echo theme_get_field('site_address1', 'option'); ?></li>
                            <li><?php get_template_part('template-parts/site-email'); ?></li>
                            <li><?php get_template_part('template-parts/site-phone'); ?></li>
                        </ul-->
@@ -71,7 +71,7 @@
             </div>
             <div class="container">
                 <div class="d-flex justify-content-sm-between flex-column-reverse d-sm-row flex-sm-row">
-                    <?php $site_logo = get_field('site_logo', 'option'); ?>
+                    <?php $site_logo = theme_get_field('site_logo', 'option'); ?>
 
                     <div class="logo-container">
                           <?php if ($site_logo){?>
@@ -134,8 +134,8 @@
                         endif; ?>
                   
 				     </h1>
-					                    <?php if (get_field('subtitle')) {
-                        echo '<p class="subtitle">' . get_field('subtitle') . '</p>';
+                                                        <?php if (theme_get_field('subtitle')) {
+                        echo '<p class="subtitle">' . theme_get_field('subtitle') . '</p>';
                     } ?>
 															
                     <?php if (is_home()) echo '<p class="subtitle">עורכי הדין המומלצים </p>'; ?>

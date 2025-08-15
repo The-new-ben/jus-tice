@@ -197,7 +197,7 @@ function my_wp_nav_menu_objects( $items, $args ) {
     // וידוא שה-Menu location הוא main-nav
     if( $args->theme_location === 'main-nav' ) {
         foreach( $items as &$item ) {
-            $icon = get_field('menu_icon', $item);
+            $icon = theme_get_field('menu_icon', $item);
             if( $icon ) {
                 // סניטציה לאובייקט התמונה
                 $icon_url = esc_url( $icon['url'] );

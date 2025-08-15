@@ -12,13 +12,13 @@
     </section>
 
     <footer class="article-footer">
-		<?php if(get_field('show_extra')):?>
+             <?php if(theme_get_field('show_extra')):?>
 		<div class="related-posts-wrapper">
 			<h2>
 				לכתבות נוספות
 			</h2>
 			<?php
-			$featured_posts = get_field('related_posts');
+                     $featured_posts = theme_get_field('related_posts');
 			if( $featured_posts ): ?>
 			<div class="inner-wrapper">
 				<?php foreach( $featured_posts as $post ): 

@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<?php $content_width  = get_field('content_width');?>
+<?php $content_width  = theme_get_field('content_width');?>
 <div id="primary" class="content-area">
     <main id="main" class="site-main <?php echo $content_width ?>" role="main">
         <div class="container">

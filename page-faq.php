@@ -9,13 +9,13 @@ get_header(); ?>
             <div class="container">
             <?php while (have_posts()) : the_post(); ?>
                   <?php the_content(); ?>
-                    <?php if (have_rows('faq')):  ?>
+                    <?php if (theme_have_rows('faq')):  ?>
                     <div class="accordion" id="faq">
                         <?php
                         $counter = 0;
-                        while (have_rows('faq')) : the_row();
-                            $quest = get_sub_field('faq_quest');
-                            $answer = get_sub_field('faq_answer');
+                        while (theme_have_rows('faq')) : theme_the_row();
+                            $quest = theme_get_sub_field('faq_quest');
+                            $answer = theme_get_sub_field('faq_answer');
                             ?>
                         <div class="card">
                             <div class="card-header" id="headingOne">

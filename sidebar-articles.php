@@ -163,7 +163,7 @@
         </div>
     <?php endif;  ?>
    
-    <?php $side_banner= get_field('side_banner', 'option');
+    <?php $side_banner= theme_get_field('side_banner', 'option');
     if($side_banner):
     ?>
 
