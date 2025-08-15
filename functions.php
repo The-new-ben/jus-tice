@@ -11,7 +11,7 @@
  * 1. REQUIRE או INCLUDE לקבצים נוספים
  * --------------------------------------------------------------------------- */
 
-require_once get_template_directory() . '/theme-parts/custom-post-types.php'; // CPTs מותאמים
+require_once get_template_directory() . '/inc/custom-post-types.php'; // CPTs מותאמים
 require_once get_template_directory() . '/library/bones.php';                 // ליבת Bones
 
 // אם תרצו לאפשר התאמות פאנל אדמין בהמשך
