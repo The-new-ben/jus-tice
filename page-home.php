@@ -8,12 +8,12 @@ get_header(); ?>
 <div id="home-page">
     <main id="main" class="site-main no-padding" role="main">
         <?php
-        if (have_rows('home_features')): ?>
+        if (theme_have_rows('home_features')): ?>
             <section id="home-features" class="no-padding clearfix">
                 <div class="container">
-                    <?php if(get_field('home_features_title')):?>
+                    <?php if(theme_get_field('home_features_title')):?>
                     <div class="section-title">
-                        <h2><?= get_field('home_features_title')?></h2>
+                        <h2><?= theme_get_field('home_features_title')?></h2>
                     </div>
                     <?php endif;?>
                 </div>
@@ -22,11 +22,11 @@ get_header(); ?>
                     <div class="col-md-6">
                         <?php
                         $i = 1;
-                        while (have_rows('home_features')): the_row();
-                            $image = get_sub_field('slide_image');
-                            $title = get_sub_field('slide_title');
-                            $caption = get_sub_field('slide_caption');
-                            $btn_link = get_sub_field('slide_link');
+                        while (theme_have_rows('home_features')): theme_the_row();
+                            $image = theme_get_sub_field('slide_image');
+                            $title = theme_get_sub_field('slide_title');
+                            $caption = theme_get_sub_field('slide_caption');
+                            $btn_link = theme_get_sub_field('slide_link');
                             if ($i == 1) {
                                 $col = 'main-feature';
                                 $justify = 'justify-content-center';
@@ -58,8 +58,8 @@ get_header(); ?>
             <div class="container">
                 <div class="row">
                     <div class="col-auto col-lg-6 caption">
-                        <?php if (get_field('about_title')){?>
-                        <h2 class="title"><?= get_field('about_title')?></h2>
+                        <?php if (theme_get_field('about_title')){?>
+                        <h2 class="title"><?= theme_get_field('about_title')?></h2>
                         <?php }?>
                         <div class="desc">
                             <?php the_content() ?>
@@ -73,7 +73,7 @@ get_header(); ?>
                             </div>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe id="video" width="560" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/<?= get_field('about_video')?>?rel=0" frameborder="0"
+                                        src="https://www.youtube-nocookie.com/embed/<?= theme_get_field('about_video')?>?rel=0" frameborder="0"
                                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen></iframe>
                             </div>
@@ -90,7 +90,7 @@ get_header(); ?>
                 </div>
 				
 				<?php 
-				$article_category = get_field('article_category', 'option');
+                                $article_category = theme_get_field('article_category', 'option');
 				//echo "<pre>"; print_r($article_category); echo "</pre>";
 				?>
 				
@@ -168,19 +168,19 @@ get_header(); ?>
 
             </div>
         </section>
-        <?php  $feat_terms = get_field('lawyer_cats');
+        <?php  $feat_terms = theme_get_field('lawyer_cats');
          if ( $feat_terms) : ?>
              <section id="law-cats">
                 <div class="container">
                     <div class="section-title">
-                        <h2><?= get_field('categories_title')?></h2>
+                        <h2><?= theme_get_field('categories_title')?></h2>
                     </div>
                 </div>
                 <div class="container wide">
                     <div class="row">
                       <?php foreach($feat_terms as $term ):
 
-                            $cat_image = get_field('cat_icon',$term);
+                            $cat_image = theme_get_field('cat_icon',$term);
                             ?>
                           <div class="col-auto item">
                             <div class="cat-box">
@@ -200,7 +200,7 @@ get_header(); ?>
         <section id="lawyers">
             <div class="container">
                 <div class="section-title accent">
-                    <h2><?= get_field('featured_lawyers_title') ?></h2>
+                    <h2><?= theme_get_field('featured_lawyers_title') ?></h2>
                 </div>
 
                 <ul class="nav nav-tabs  d-flex" role="tablist">

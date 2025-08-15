@@ -13,3 +13,21 @@ defined( 'ABSPATH' ) || exit;
 function aero_index_safe_count( $var ) {
     return is_countable( $var ) ? count( $var ) : 0;
 }
+
+function theme_get_field($selector, $post_id = false, $format_value = true) {
+    return function_exists('get_field') ? get_field($selector, $post_id, $format_value) : null;
+}
+
+function theme_have_rows($selector, $post_id = false) {
+    return function_exists('have_rows') ? have_rows($selector, $post_id) : false;
+}
+
+function theme_get_sub_field($selector, $format_value = true) {
+    return function_exists('get_sub_field') ? get_sub_field($selector, $format_value) : null;
+}
+
+function theme_the_row() {
+    if (function_exists('the_row')) {
+        the_row();
+    }
+}

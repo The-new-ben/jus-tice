@@ -5,12 +5,12 @@
             <div class="row">
                 <div id="footer-about" class="col-md-4">
                     <h3 class="widget-title">מי אנחנו</h3>
-                    <p><?= get_field('footer_about', 'option'); ?></p>
+                    <p><?= theme_get_field('footer_about', 'option'); ?></p>
                     <a class="readmore" href="<?php echo get_page_link(28); ?>">קראו עוד עלינו<i class="aero-arrow-left-thin"></i></a>
                 </div>
                 <div id="footer-site-info" class="col-md-4">
                     <h3 class="widget-title">פרטי התקשרות</h3>
-                    <p><strong>כתובת</strong><span><?php echo get_field('site_address1', 'option'); ?></span></p>
+                    <p><strong>כתובת</strong><span><?php echo theme_get_field('site_address1', 'option'); ?></span></p>
                     <p><strong>טלפון</strong><span><?php get_template_part('template-parts/site-phone'); ?></span></p>
                     <p><strong>אימייל</strong><span><?php get_template_part('template-parts/site-email'); ?></span></p>
                 </div>
