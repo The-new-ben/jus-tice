@@ -71,14 +71,23 @@
             </div>
             <div class="container">
                 <div class="d-flex justify-content-sm-between flex-column-reverse d-sm-row flex-sm-row">
-                    <?php $site_logo = get_field('site_logo', 'option'); ?>
+                    <?php
+                    $site_logo_url = '';
+                    if (function_exists('get_field')) {
+                        $logo_field = get_field('site_logo', 'option');
+                        if (!empty($logo_field['url'])) {
+                            $site_logo_url = $logo_field['url'];
+                        }
+                    }
+                    if (!$site_logo_url) {
+                        $site_logo_url = get_template_directory_uri() . '/library/images/logo.png';
+                    }
+                    ?>
 
                     <div class="logo-container">
-                          <?php if ($site_logo){?>
-                         <a class="logo" href="<?php echo home_url(); ?>">
-                            <img src="<?php echo $site_logo['url']?>" width="86" height="86"/>
+                        <a class="logo" href="<?php echo home_url(); ?>">
+                            <img src="<?php echo esc_url($site_logo_url); ?>" width="86" height="86" alt="<?php bloginfo('name'); ?>" />
                         </a>
-                      <?php  }?>
 
                         <button class="navbar-toggler d-lg-none" type="button" data-toggle="offcanvas"
                                 aria-controls="navbar-header">
