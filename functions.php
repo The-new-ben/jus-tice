@@ -112,22 +112,23 @@ function bones_register_sidebars() {
 function bones_fonts() {
   // מומלץ: לקרוא ל- wp_enqueue_style פעם אחת להקטנת התנגשויות
   // ולבדוק אם לא "דורסים" את אותו handle פעמיים
-  wp_enqueue_style( 
-    'bones-google-fonts', 
-    'https://fonts.googleapis.com/css?family=Assistant:300,400,600,700,800&display=swap&subset=hebrew', 
-    array(), 
-    null 
-  );
-
-  // במקרה שרוצים להוסיף פונט נוסף, אפשר לרשום handle נפרד או לאחד לרשימה אחת
   wp_enqueue_style(
-    'bones-google-fonts-secondary',
-    'https://fonts.googleapis.com/css?family=Montserrat&display=swap',
+    'bones-google-fonts',
+    'https://fonts.googleapis.com/css?family=Assistant:300,400,600,700,800|Montserrat&display=swap&subset=hebrew',
     array(),
     null
   );
 }
 add_action( 'wp_enqueue_scripts', 'bones_fonts' );
+
+function bones_preconnect_fonts($urls, $relation_type) {
+  if (in_array($relation_type, array('preconnect'), true)) {
+    $urls[] = array('href' => 'https://fonts.googleapis.com', 'crossorigin' => true);
+    $urls[] = array('href' => 'https://fonts.gstatic.com', 'crossorigin' => true);
+  }
+  return $urls;
+}
+add_filter('wp_resource_hints', 'bones_preconnect_fonts', 10, 2);
 
 /* ---------------------------------------------------------------------------
  * 8. ACF Options Page (במידה ומשתמשים ב-ACF Pro)
