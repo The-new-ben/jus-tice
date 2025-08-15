@@ -16,7 +16,11 @@ get_header();
                         <div class="row">
                             <div class="contact-us col-md-8">
                                 <h3 class="widgettitle large">כתבו אלינו</h3>
-                                <?php  echo do_shortcode('[gravityform id=4 title=false description=true ajax=true]');?>
+                                <?php if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+                                    echo do_shortcode('[gravityform id=4 title=false description=true ajax=true]');
+                                } else {
+                                    echo '<p>Form could not be loaded.</p>';
+                                } ?>
                             </div>
                             <div class="contact-details col-md-4">
                                 <h3 class="widgettitle large"><span>פרטי</span> התקשרות</h3>

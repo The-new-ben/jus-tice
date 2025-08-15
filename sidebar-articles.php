@@ -30,10 +30,14 @@
 				endwhile; ?>
 			</ul>
 	</div>
-	<div class="widget">
-		<h4 class="widgettitle">צרו קשר</h4>
-		<?php echo do_shortcode('[gravityform id=1 title=false description=true ajax=true]'); ?>
-	</div>
+        <div class="widget">
+                <h4 class="widgettitle">צרו קשר</h4>
+                <?php if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+                    echo do_shortcode('[gravityform id=1 title=false description=true ajax=true]');
+                } else {
+                    echo '<p>Form could not be loaded.</p>';
+                } ?>
+        </div>
 	
 	<div>
 		<?php  

@@ -162,7 +162,9 @@ add_filter( 'the_excerpt', 'div_wrapper' );
 /* ---------------------------------------------------------------------------
  * 10. הגדרת נראות לתוויות בשדות Gravity Forms
  * --------------------------------------------------------------------------- */
-add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
+if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+    add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
+}
 
 /* ---------------------------------------------------------------------------
  * 11. פונקציית excerpt מותאמת
