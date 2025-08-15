@@ -163,12 +163,13 @@
         </div>
     <?php endif;  ?>
    
-    <?php $side_banner= get_field('side_banner', 'option');
+    <?php $side_banner = get_field('side_banner', 'option');
+    $side_banner_link = get_field('side_banner_link', 'option');
     if($side_banner):
     ?>
 
     <div class="widget banner">
-        <a href="<?= $side_banner_link['url'] ?>">
+        <a href="<?= esc_url( $side_banner_link['url'] ) ?>">
             <img src="<?php echo $side_banner['url']; ?>" alt="<?php echo $side_banner['alt']; ?>"/>
         </a>
     </div>
