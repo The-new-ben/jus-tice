@@ -4,7 +4,7 @@
 */
 
 get_header(); ?>
-<?php $content_width = get_field('content_width'); ?>
+<?php $content_width = function_exists('get_field') ? get_field('content_width') : ''; ?>
 <div id="primary" class="content-area">
     <main id="main" class="site-main  has-bg <?php echo $content_width ?>" role="main">
 

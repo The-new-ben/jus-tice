@@ -11,9 +11,9 @@ get_header(); ?>
         if (have_rows('home_features')): ?>
             <section id="home-features" class="no-padding clearfix">
                 <div class="container">
-                    <?php if(get_field('home_features_title')):?>
+                    <?php if (function_exists('get_field') && get_field('home_features_title')):?>
                     <div class="section-title">
-                        <h2><?= get_field('home_features_title')?></h2>
+                        <h2><?= function_exists('get_field') ? get_field('home_features_title') : ''?></h2>
                     </div>
                     <?php endif;?>
                 </div>
@@ -58,8 +58,8 @@ get_header(); ?>
             <div class="container">
                 <div class="row">
                     <div class="col-auto col-lg-6 caption">
-                        <?php if (get_field('about_title')){?>
-                        <h2 class="title"><?= get_field('about_title')?></h2>
+                        <?php if (function_exists('get_field') && get_field('about_title')){?>
+                        <h2 class="title"><?= function_exists('get_field') ? get_field('about_title') : ''?></h2>
                         <?php }?>
                         <div class="desc">
                             <?php the_content() ?>
@@ -73,7 +73,7 @@ get_header(); ?>
                             </div>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe id="video" width="560" height="315"
-                                        src="https://www.youtube-nocookie.com/embed/<?= get_field('about_video')?>?rel=0" frameborder="0"
+                                        src="https://www.youtube-nocookie.com/embed/<?= function_exists('get_field') ? get_field('about_video') : ''?>?rel=0" frameborder="0"
                                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen></iframe>
                             </div>
@@ -90,7 +90,7 @@ get_header(); ?>
                 </div>
 				
 				<?php 
-				$article_category = get_field('article_category', 'option');
+                                $article_category = function_exists('get_field') ? get_field('article_category', 'option') : '';
 				//echo "<pre>"; print_r($article_category); echo "</pre>";
 				?>
 				
@@ -168,24 +168,24 @@ get_header(); ?>
 
             </div>
         </section>
-        <?php  $feat_terms = get_field('lawyer_cats');
+        <?php  $feat_terms = function_exists('get_field') ? get_field('lawyer_cats') : '';
          if ( $feat_terms) : ?>
              <section id="law-cats">
                 <div class="container">
                     <div class="section-title">
-                        <h2><?= get_field('categories_title')?></h2>
+                        <h2><?= function_exists('get_field') ? get_field('categories_title') : ''?></h2>
                     </div>
                 </div>
                 <div class="container wide">
                     <div class="row">
                       <?php foreach($feat_terms as $term ):
 
-                            $cat_image = get_field('cat_icon',$term);
+                            $cat_image = function_exists('get_field') ? get_field('cat_icon',$term) : '';
                             ?>
                           <div class="col-auto item">
                             <div class="cat-box">
                                 <div class="caption">
-                                    <img src="<?php echo $cat_image['url']?>"/>
+                                    <img src="<?php echo $cat_image['url'] ?? ''?>"/>
                                     <h3><?php echo $term->name; ?></h3>
                                     <p><?php echo $term->description; ?></p>
                                 </div>
@@ -200,7 +200,7 @@ get_header(); ?>
         <section id="lawyers">
             <div class="container">
                 <div class="section-title accent">
-                    <h2><?= get_field('featured_lawyers_title') ?></h2>
+                    <h2><?= function_exists('get_field') ? get_field('featured_lawyers_title') : '' ?></h2>
                 </div>
 
                 <ul class="nav nav-tabs  d-flex" role="tablist">
