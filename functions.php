@@ -304,3 +304,34 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+add_filter('wp_sitemaps_post_types', function($post_types){
+    $post_types['articles'] = 'articles';
+    $post_types['lawyers'] = 'lawyers';
+    return $post_types;
+});
+
+add_action('init', function(){
+    add_rewrite_rule('feed/json/?$', 'index.php?json_feed=1', 'top');
+});
+
+add_filter('query_vars', function($vars){
+    $vars[] = 'json_feed';
+    return $vars;
+});
+
+add_action('template_redirect', function(){
+    if (get_query_var('json_feed')) {
+        $posts = get_posts(['numberposts' => 10, 'post_status' => 'publish']);
+        $items = [];
+        foreach ($posts as $p) {
+            $items[] = [
+                'id' => $p->ID,
+                'title' => get_the_title($p),
+                'link' => get_permalink($p),
+                'date' => get_the_date('c', $p),
+            ];
+        }
+        wp_send_json(['items' => $items]);
+    }
+});
