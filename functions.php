@@ -21,6 +21,7 @@ require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/blocks-loader.php';
+require_once get_template_directory() . '/inc/structured-data.php';
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
  * --------------------------------------------------------------------------- */
