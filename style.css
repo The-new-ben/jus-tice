@@ -12,96 +12,15 @@ License URI: http://sam.zoy.org/wtfpl/
 Are You Serious? Yes.
 
 ******************************************************************/
-
-/* 1) RESET / NORMALIZE בסיסי 
-   --------------------------
-   במידה ויש לכם Reset/Normalize משלכם, אפשר להשאיר קטע זה או להסיר אם מיותר.
-*/
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root{
+  --color-primary: rgb(34,34,34);
+  --color-secondary: rgb(85,85,85);
+  --color-accent: rgb(0,115,170);
+  --color-border: rgb(204,204,204);
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --font-base: "Helvetica, Arial, sans-serif";
+  --font-heading: "Georgia, serif";
 }
-
-/* ניתן להחליט אם להשתמש ב-Reset יסודי יותר בעזרת normalize.css וכדומה. */
-
-/* 2) הגדרות בסיסיות וגלובליות (משתני :root)
-   ----------------------------------------- */
-:root {
-  --item-gap: 10px;                /* רווח בין items */
-  --color-link-hover: #0073aa;     /* צבע לינק בהובר (לדוגמה) */
-  --border-color: #ccc;            /* צבע ברירת מחדל לגבולות (טבלאות וכדומה) */
-  /* ניתן להוסיף עוד משתנים גלובליים (צבעי רקע, פונט וכו') */
-}
-
-/* 3) עיצוב לינקים בסיסי
-   ---------------------- */
-a {
-  color: inherit;                  /* שומר על צבע הטקסט עבור הלינק */
-  text-decoration: none;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
-}
-
-/* לינקים במצבי :hover ו-:focus - לשיפור נגישות ונראות */
-a:hover,
-a:focus {
-  color: var(--color-link-hover);
-  text-decoration: underline;
-}
-
-/* 4) עיצוב טבלאות
-   ---------------------- */
-table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;       /* איחוד גבולות */
-}
-
-td {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-all;
-  border: 1px solid var(--border-color);
-  padding: 8px;
-}
-
-/* 5) Layout בסיסי עם Flexbox
-   ------------------------- */
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--item-gap); /* מרווח בין האייטמים (נתמך בדפדפנים מודרניים) */
-}
-
-.item {
-  flex: 1 1 calc(33.333% - (2 * var(--item-gap)));
-  box-sizing: border-box; /* כבר מוגדר ב-Reset, אך אפשר להשאיר להבהרה */
-  min-width: 0;           /* מונע overflow בלתי צפוי בחלק מהדפדפנים */
-  /* במקום margin ידני, נשען על gap (אם רוצים לשלב גם margin, אפשר) */
-}
-
-/* 6) עיצוב רספונסיבי - טבלטים
-   -------------------------- */
-@media only screen and (max-width: 768px) {
-  .item {
-    flex: 1 1 calc(50% - (2 * var(--item-gap))); /* שתי עמודות בשורה */
-  }
-}
-
-/* 7) עיצוב רספונסיבי - מוביילים
-   -------------------------- */
-@media only screen and (max-width: 480px) {
-  .item {
-    flex: 1 1 100%;
-  }
-}
-
-/* הערה:
-   אם רוצים תמיכה בדפדפנים ישנים יותר (IE11 וכדומה) יש להוסיף prefix-ים 
-   בעזרת כלים כמו Autoprefixer או לכתוב them ידנית.
-*/
