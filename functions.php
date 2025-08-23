@@ -21,10 +21,14 @@ require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/blocks-loader.php';
+ codex/register-_ai_meta-post-meta-with-rest-exposure
+require_once get_template_directory() . '/inc/ai-meta.php';
+
  codex/log-404-requests-in-custom-table
 require_once get_template_directory() . '/inc/redirects.php';
 
 require_once get_template_directory() . '/inc/structured-data.php';
+ main
  main
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
@@ -89,10 +93,94 @@ function bones_custom_image_sizes( $sizes ) {
  * 5. Theme Customizer (ניתן להרחבה)
  * --------------------------------------------------------------------------- */
 function bones_theme_customizer( $wp_customize ) {
-  // להוספת הגדרות/בקרות בהתאמה אישית
-  // $wp_customize->remove_section('title_tagline'); // דוגמה להסרה
+  $wp_customize->add_section('business_info', array(
+    'title' => __( 'Business Info', 'bonestheme' ),
+    'priority' => 30
+  ));
+  $wp_customize->add_setting('business_name', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_name', array(
+    'label' => __( 'Business Name', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_address', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_address', array(
+    'label' => __( 'Address', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_phone', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_phone', array(
+    'label' => __( 'Phone', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_email', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_email', array(
+    'label' => __( 'Email', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_hours', array('sanitize_callback' => 'sanitize_textarea_field'));
+  $wp_customize->add_control('business_hours', array(
+    'label' => __( 'Opening Hours', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'textarea'
+  ));
+  $wp_customize->add_setting('business_lat', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_lat', array(
+    'label' => __( 'Latitude', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_lng', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_lng', array(
+    'label' => __( 'Longitude', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
 }
 add_action( 'customize_register', 'bones_theme_customizer' );
+
+function bones_local_business_schema() {
+  $name = get_theme_mod('business_name');
+  $address = get_theme_mod('business_address');
+  $phone = get_theme_mod('business_phone');
+  $email = get_theme_mod('business_email');
+  $hours = get_theme_mod('business_hours');
+  $lat = get_theme_mod('business_lat');
+  $lng = get_theme_mod('business_lng');
+  if ($name || $address || $phone || $email || $hours || ($lat && $lng)) {
+    $data = array(
+      '@context' => 'https://schema.org',
+      '@type' => 'LocalBusiness'
+    );
+    if ($name) {
+      $data['name'] = $name;
+    }
+    if ($address) {
+      $data['address'] = $address;
+    }
+    if ($phone) {
+      $data['telephone'] = $phone;
+    }
+    if ($email) {
+      $data['email'] = $email;
+    }
+    if ($hours) {
+      $data['openingHours'] = $hours;
+    }
+    if ($lat && $lng) {
+      $data['geo'] = array(
+        '@type' => 'GeoCoordinates',
+        'latitude' => $lat,
+        'longitude' => $lng
+      );
+    }
+    echo '<script type="application/ld+json">' . wp_json_encode($data) . '</script>';
+  }
+}
+add_action('wp_head', 'bones_local_business_schema');
 
 /* ---------------------------------------------------------------------------
  * 6. Sidebars & Widget Areas
@@ -311,6 +399,7 @@ function category_trail_shortcode() {
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
  codex/add-frontend-script-for-vitals-reporting
+ codex/add-frontend-script-for-vitals-reporting
 add_action('init', function(){
     add_rewrite_rule('^ai/v1/vitals/?','index.php?rest_route=/ai/v1/vitals','top');
 });
@@ -338,6 +427,158 @@ function ai_store_vitals(WP_REST_Request $r){
     return rest_ensure_response(array('ok'=>true));
 }
 
+=======
+ codex/add-canonical-and-alternate-tags
+function justice_rel_links() {
+    if (is_singular()) {
+        $u = get_permalink();
+        echo '<link rel="canonical" href="' . esc_url($u) . '">';
+        $langs = function_exists('pll_languages_list') ? pll_languages_list() : (function_exists('icl_get_languages') ? array_keys(icl_get_languages()) : get_available_languages());
+        if (is_array($langs) && count($langs) > 1) {
+            foreach ($langs as $code) {
+                $link = $u;
+                if (function_exists('pll_get_post')) {
+                    $p = pll_get_post(get_the_ID(), $code);
+                    if ($p) {
+                        $link = get_permalink($p);
+                    }
+                } elseif (function_exists('icl_object_id')) {
+                    $link = apply_filters('wpml_permalink', $u, $code);
+                } else {
+                    $link = add_query_arg('lang', $code, $u);
+                }
+                echo '<link rel="alternate" hreflang="' . esc_attr($code) . '" href="' . esc_url($link) . '">';
+            }
+        }
+    }
+}
+add_action('wp_head','justice_rel_links');
+
+ codex/register-post-meta-for-variant-titles
+add_action('init',function(){
+    register_post_meta('', '_ab_h1', ['show_in_rest'=>true,'single'=>true,'type'=>'string','auth_callback'=>function(){return current_user_can('edit_posts');}]);
+});
+
+add_action('wp',function(){
+    if(!is_singular())return;
+    $id=get_queried_object_id();
+    $meta=get_post_meta($id,'_ab_h1',true);
+    if(!$meta)return;
+    $variants=array_map('trim',preg_split("/\r\n|\r|\n/",$meta));
+    if(count($variants)<2)return;
+    $key='ab_h1_'.$id;
+    if(!isset($_COOKIE[$key])){
+        $index=array_rand($variants);
+        setcookie($key,$index,time()+2592000,COOKIEPATH,COOKIE_DOMAIN);
+        $_COOKIE[$key]=$index;
+    }
+    $GLOBALS['ab_h1_variant']=$variants[$_COOKIE[$key]];
+});
+
+add_filter('the_title',function($title,$post_id){
+    if(!is_singular()||$post_id!==get_the_ID())return $title;
+    if(!empty($GLOBALS['ab_h1_variant']))return $GLOBALS['ab_h1_variant'];
+    return $title;
+},10,2);
+
+ codex/add-alt-text-for-images-without-description
+add_action('add_attachment', 'jt_populate_image_alt');
+function jt_populate_image_alt($post_id) {
+    $post = get_post($post_id);
+    if (!$post) {
+        return;
+    }
+    if (strpos($post->post_mime_type, 'image/') !== 0) {
+        return;
+    }
+    $alt = get_post_meta($post_id, '_wp_attachment_image_alt', true);
+    if ($alt) {
+        return;
+    }
+    $title = get_the_title($post_id);
+    if ($title) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', sanitize_text_field($title));
+        return;
+    }
+    $description = jt_generate_image_description($post_id);
+    if ($description) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', $description);
+    }
+}
+
+function jt_generate_image_description($post_id) {
+    $path = get_attached_file($post_id);
+    if (!$path || !file_exists($path)) {
+        return '';
+    }
+    $data = file_get_contents($path);
+    if (!$data) {
+        return '';
+    }
+    $body = [
+        'model' => 'gpt-4o-mini',
+        'input' => [[
+            'role' => 'user',
+            'content' => [
+                ['type' => 'input_text', 'text' => 'Describe this image for alt text'],
+                ['type' => 'input_image', 'image_base64' => base64_encode($data)]
+            ]
+        ]],
+        'max_output_tokens' => 150
+    ];
+    $response = wp_remote_post('https://api.openai.com/v1/responses', [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . getenv('OPENAI_API_KEY')
+        ],
+        'body' => wp_json_encode($body),
+        'timeout' => 60
+    ]);
+    if (is_wp_error($response)) {
+        return '';
+    }
+    $body = wp_remote_retrieve_body($response);
+    if (!$body) {
+        return '';
+    }
+    $data = json_decode($body, true);
+    $text = $data['output'][0]['content'][0]['text'] ?? '';
+    return sanitize_text_field($text);
+}
+
+ codex/extend-wp-core-sitemaps-with-custom-post-types
+add_filter('wp_sitemaps_post_types', function($post_types){
+    $post_types['articles'] = 'articles';
+    $post_types['lawyers'] = 'lawyers';
+    return $post_types;
+});
+
+add_action('init', function(){
+    add_rewrite_rule('feed/json/?$', 'index.php?json_feed=1', 'top');
+});
+
+add_filter('query_vars', function($vars){
+    $vars[] = 'json_feed';
+    return $vars;
+});
+
+add_action('template_redirect', function(){
+    if (get_query_var('json_feed')) {
+        $posts = get_posts(['numberposts' => 10, 'post_status' => 'publish']);
+        $items = [];
+        foreach ($posts as $p) {
+            $items[] = [
+                'id' => $p->ID,
+                'title' => get_the_title($p),
+                'link' => get_permalink($p),
+                'date' => get_the_date('c', $p),
+            ];
+        }
+        wp_send_json(['items' => $items]);
+    }
+});
+
+ main
  codex/define-root-level-variables-in-style.css
 function theme_styles(){
   wp_enqueue_style('theme-root', get_stylesheet_uri());
@@ -466,6 +707,12 @@ function jus_indexnow_submit_url($post_id, $post, $update) {
     ));
 }
 add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
+ main
+ main
+ main
+ codex/add-frontend-script-for-vitals-reporting
+
  main
  main
  main
