@@ -291,7 +291,9 @@ add_filter('the_content', 'jus_rel_attributes_for_content', 15);
 /* ---------------------------------------------------------------------------
  * 10. הגדרת נראות לתוויות בשדות Gravity Forms
  * --------------------------------------------------------------------------- */
-add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
+if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+    add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
+}
 
 /* ---------------------------------------------------------------------------
  * 12. תמיכה בהעלאת SVG (הוספה ל-MIME Types)

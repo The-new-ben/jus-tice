@@ -24,7 +24,11 @@
                 </div>
                 <div id="footer-contact" class="col-auto col-md-4">
                     <h3 class="widget-title">צרו קשר</h3>
-                    <?php echo do_shortcode('[gravityform id="2" title="false" description="true" ajax="true"]'); ?>
+                    <?php if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+                        echo do_shortcode('[gravityform id="2" title="false" description="true" ajax="true"]');
+                    } else {
+                        echo '<p>Form could not be loaded.</p>';
+                    } ?>
                 </div>
             </div>
         </div>
