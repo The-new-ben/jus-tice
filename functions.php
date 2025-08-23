@@ -162,6 +162,33 @@ function div_wrapper($content) {
 add_filter( 'the_content', 'div_wrapper' );
 add_filter( 'the_excerpt', 'div_wrapper' );
 
+function jus_cache_control_headers($headers) {
+    if (is_singular()) {
+        $headers['Cache-Control'] = 'public, max-age=0, stale-while-revalidate=600';
+    }
+    return $headers;
+}
+add_filter('wp_headers', 'jus_cache_control_headers');
+
+function jus_rel_attributes_for_content($content) {
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+    foreach ($dom->getElementsByTagName('a') as $link) {
+        $rel = trim($link->getAttribute('rel'));
+        $parts = $rel ? preg_split('/\s+/', $rel) : array();
+        foreach (array('noopener','ugc','nofollow') as $value) {
+            if (!in_array($value, $parts, true)) {
+                $parts[] = $value;
+            }
+        }
+        $link->setAttribute('rel', implode(' ', $parts));
+    }
+    return $dom->saveHTML();
+}
+add_filter('the_content', 'jus_rel_attributes_for_content', 15);
+
 /* ---------------------------------------------------------------------------
  * 10. הגדרת נראות לתוויות בשדות Gravity Forms
  * --------------------------------------------------------------------------- */
