@@ -314,6 +314,33 @@ function category_trail_shortcode() {
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
+ codex/register-post-meta-for-variant-titles
+add_action('init',function(){
+    register_post_meta('', '_ab_h1', ['show_in_rest'=>true,'single'=>true,'type'=>'string','auth_callback'=>function(){return current_user_can('edit_posts');}]);
+});
+
+add_action('wp',function(){
+    if(!is_singular())return;
+    $id=get_queried_object_id();
+    $meta=get_post_meta($id,'_ab_h1',true);
+    if(!$meta)return;
+    $variants=array_map('trim',preg_split("/\r\n|\r|\n/",$meta));
+    if(count($variants)<2)return;
+    $key='ab_h1_'.$id;
+    if(!isset($_COOKIE[$key])){
+        $index=array_rand($variants);
+        setcookie($key,$index,time()+2592000,COOKIEPATH,COOKIE_DOMAIN);
+        $_COOKIE[$key]=$index;
+    }
+    $GLOBALS['ab_h1_variant']=$variants[$_COOKIE[$key]];
+});
+
+add_filter('the_title',function($title,$post_id){
+    if(!is_singular()||$post_id!==get_the_ID())return $title;
+    if(!empty($GLOBALS['ab_h1_variant']))return $GLOBALS['ab_h1_variant'];
+    return $title;
+},10,2);
+=======
  codex/add-alt-text-for-images-without-description
 add_action('add_attachment', 'jt_populate_image_alt');
 function jt_populate_image_alt($post_id) {
@@ -539,6 +566,7 @@ function jus_indexnow_submit_url($post_id, $post, $update) {
     ));
 }
 add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
  main
  main
  main
