@@ -3,16 +3,16 @@
 <div id="main" class="site-main" role="main">
     <div class="container">
         <?php
-        //Get the search term
-        global $searchandfilter;
-        $sf_current_query = $searchandfilter->get(335)->current_query();
-        echo $sf_current_query->get_fields_html(
-            array("_sft_lawyer-cat")
-        );
-        echo $sf_current_query->get_fields_html(
-            array("_sft_locations")
-        );
-        //var_dump($sf_current_query->get_array());
+        if (class_exists('Search_Filter')) {
+            global $searchandfilter;
+            $sf_current_query = $searchandfilter->get(335)->current_query();
+            echo $sf_current_query->get_fields_html(
+                array("_sft_lawyer-cat")
+            );
+            echo $sf_current_query->get_fields_html(
+                array("_sft_locations")
+            );
+        }
         ?>
     </div>
     <div id="lawyers">

@@ -12,13 +12,21 @@
     </section>
 
     <footer class="article-footer">
-		<?php if(get_field('show_extra')):?>
+ codex/create-acf-wrapper-functions
+             <?php if(theme_get_field('show_extra')):?>
+
+                <?php if (function_exists('get_field') && get_field('show_extra')):?>
+ main
 		<div class="related-posts-wrapper">
 			<h2>
 				לכתבות נוספות
 			</h2>
 			<?php
-			$featured_posts = get_field('related_posts');
+ codex/create-acf-wrapper-functions
+                     $featured_posts = theme_get_field('related_posts');
+
+                        $featured_posts = function_exists('get_field') ? get_field('related_posts') : '';
+ main
 			if( $featured_posts ): ?>
 			<div class="inner-wrapper">
 				<?php foreach( $featured_posts as $post ): 

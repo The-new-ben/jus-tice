@@ -6,6 +6,7 @@ import { initClickableElements } from './modules/clickableElements.js';
 import { initFloatingLabels } from './modules/floatingLabels.js';
 import { initMobileMenu } from './modules/mobileMenu.js';
 import { initTestimonialSlider } from './modules/testimonialSlider.js';
+import { initLawyerAi } from './modules/lawyerAi.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initOffcanvas();
@@ -16,4 +17,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFloatingLabels();
   initMobileMenu();
   initTestimonialSlider();
+  initLawyerAi();
 });
