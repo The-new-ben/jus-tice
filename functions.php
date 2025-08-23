@@ -314,6 +314,32 @@ function category_trail_shortcode() {
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
+ codex/add-canonical-and-alternate-tags
+function justice_rel_links() {
+    if (is_singular()) {
+        $u = get_permalink();
+        echo '<link rel="canonical" href="' . esc_url($u) . '">';
+        $langs = function_exists('pll_languages_list') ? pll_languages_list() : (function_exists('icl_get_languages') ? array_keys(icl_get_languages()) : get_available_languages());
+        if (is_array($langs) && count($langs) > 1) {
+            foreach ($langs as $code) {
+                $link = $u;
+                if (function_exists('pll_get_post')) {
+                    $p = pll_get_post(get_the_ID(), $code);
+                    if ($p) {
+                        $link = get_permalink($p);
+                    }
+                } elseif (function_exists('icl_object_id')) {
+                    $link = apply_filters('wpml_permalink', $u, $code);
+                } else {
+                    $link = add_query_arg('lang', $code, $u);
+                }
+                echo '<link rel="alternate" hreflang="' . esc_attr($code) . '" href="' . esc_url($link) . '">';
+            }
+        }
+    }
+}
+add_action('wp_head','justice_rel_links');
+
  codex/register-post-meta-for-variant-titles
 add_action('init',function(){
     register_post_meta('', '_ab_h1', ['show_in_rest'=>true,'single'=>true,'type'=>'string','auth_callback'=>function(){return current_user_can('edit_posts');}]);
@@ -340,7 +366,7 @@ add_filter('the_title',function($title,$post_id){
     if(!empty($GLOBALS['ab_h1_variant']))return $GLOBALS['ab_h1_variant'];
     return $title;
 },10,2);
-=======
+
  codex/add-alt-text-for-images-without-description
 add_action('add_attachment', 'jt_populate_image_alt');
 function jt_populate_image_alt($post_id) {
@@ -566,6 +592,7 @@ function jus_indexnow_submit_url($post_id, $post, $update) {
     ));
 }
 add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
  main
  main
  main
