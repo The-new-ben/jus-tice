@@ -12,13 +12,21 @@
     </section>
 
     <footer class="article-footer">
+ codex/create-acf-wrapper-functions
              <?php if(theme_get_field('show_extra')):?>
+
+                <?php if (function_exists('get_field') && get_field('show_extra')):?>
+ main
 		<div class="related-posts-wrapper">
 			<h2>
 				לכתבות נוספות
 			</h2>
 			<?php
+ codex/create-acf-wrapper-functions
                      $featured_posts = theme_get_field('related_posts');
+
+                        $featured_posts = function_exists('get_field') ? get_field('related_posts') : '';
+ main
 			if( $featured_posts ): ?>
 			<div class="inner-wrapper">
 				<?php foreach( $featured_posts as $post ): 
@@ -32,12 +40,7 @@
 					</div>
 					<div class="text-holder">
 						<a href="<?php the_permalink(); ?>"><?php the_title('<h3>','</h3>'); ?>	</a>
-						<?php
-						$excerpt = get_the_excerpt();
-						$excerpt = substr($excerpt, 0, 260);
-						$result = substr($excerpt, 0, strrpos($excerpt, ' '));
-						echo '<p>' . $result . '...</p>';
-						?>
+                                                <p><?php echo wp_trim_words(get_the_excerpt(), 40, '...'); ?></p>
 					</div>
 						
 					
