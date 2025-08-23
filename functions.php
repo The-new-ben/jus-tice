@@ -304,3 +304,30 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+add_action('init', function(){
+    add_rewrite_rule('^ai/v1/vitals/?','index.php?rest_route=/ai/v1/vitals','top');
+});
+
+add_action('rest_api_init', function(){
+    register_rest_route('ai/v1','/vitals',array(
+        'methods'=>'POST',
+        'callback'=>'ai_store_vitals',
+        'permission_callback'=>'__return_true'
+    ));
+});
+
+function ai_store_vitals(WP_REST_Request $r){
+    global $wpdb;
+    $t=$wpdb->prefix.'ai_vitals';
+    $c=$wpdb->get_charset_collate();
+    $s="CREATE TABLE IF NOT EXISTS $t (id bigint(20) unsigned NOT NULL auto_increment,url text NOT NULL,ttfb float,lcp float,recorded_at datetime DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (id)) $c;";
+    require_once ABSPATH.'wp-admin/includes/upgrade.php';
+    dbDelta($s);
+    $wpdb->insert($t,array(
+        'url'=>$r->get_param('url'),
+        'ttfb'=>$r->get_param('ttfb'),
+        'lcp'=>$r->get_param('lcp')
+    ));
+    return rest_ensure_response(array('ok'=>true));
+}
