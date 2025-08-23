@@ -306,6 +306,34 @@ function category_trail_shortcode() {
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
+ codex/add-related-posts-block-after-first-h2
+function related_links_block($content) {
+    if (!is_singular('post')) {
+        return $content;
+    }
+    global $post;
+    $related = get_posts(array(
+        's' => $post->post_title,
+        'post__not_in' => array($post->ID),
+        'posts_per_page' => 5
+    ));
+    if (!$related) {
+        return $content;
+    }
+    $html = '<div class="related-links"><h2>Related Posts</h2><ul>';
+    foreach ($related as $p) {
+        $html .= '<li><a href="' . get_permalink($p) . '">' . esc_html(get_the_title($p)) . '</a></li>';
+    }
+    $html .= '</ul></div>';
+    if (strpos($content, '<h2') !== false) {
+        $content = preg_replace('/(<h2[^>]*>.*?<\/h2>)/i', '$1' . $html, $content, 1);
+    } else {
+        $content .= $html;
+    }
+    return $content;
+}
+add_filter('the_content', 'related_links_block');
+=======
 codex/filter-pre_get_document_title-for-singular-views
 function aero_index_document_title($title) {
     if (is_singular()) {
@@ -397,4 +425,5 @@ function jus_indexnow_submit_url($post_id, $post, $update) {
     ));
 }
 add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
  main
