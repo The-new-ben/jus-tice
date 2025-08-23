@@ -304,3 +304,62 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+function jus_indexnow_register_settings() {
+    register_setting('jus_indexnow', 'indexnow_api_key');
+    register_setting('jus_indexnow', 'indexnow_host');
+}
+add_action('admin_init', 'jus_indexnow_register_settings');
+
+function jus_indexnow_add_options_page() {
+    add_options_page('IndexNow', 'IndexNow', 'manage_options', 'jus-indexnow', 'jus_indexnow_render_settings');
+}
+add_action('admin_menu', 'jus_indexnow_add_options_page');
+
+function jus_indexnow_render_settings() {
+    ?>
+    <div class="wrap">
+        <h1>IndexNow</h1>
+        <form method="post" action="options.php">
+            <?php settings_fields('jus_indexnow'); ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><label for="indexnow_api_key">API Key</label></th>
+                    <td><input name="indexnow_api_key" type="text" id="indexnow_api_key" value="<?php echo esc_attr(get_option('indexnow_api_key')); ?>" class="regular-text" /></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="indexnow_host">Host</label></th>
+                    <td><input name="indexnow_host" type="text" id="indexnow_host" value="<?php echo esc_attr(get_option('indexnow_host')); ?>" class="regular-text" /></td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
+
+function jus_indexnow_submit_url($post_id, $post, $update) {
+    if (wp_is_post_revision($post_id)) {
+        return;
+    }
+    if ($post->post_status !== 'publish') {
+        return;
+    }
+    $key = get_option('indexnow_api_key');
+    $host = get_option('indexnow_host');
+    if (!$key || !$host) {
+        return;
+    }
+    $url = get_permalink($post_id);
+    $body = array(
+        'host' => $host,
+        'key' => $key,
+        'urlList' => array($url)
+    );
+    wp_remote_post('https://www.bing.com/indexnow', array(
+        'headers' => array('Content-Type' => 'application/json'),
+        'body' => wp_json_encode($body),
+        'timeout' => 10
+    ));
+}
+add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
