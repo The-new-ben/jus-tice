@@ -5,7 +5,11 @@
 
 get_header();
 ?>
-<?php $content_width  = get_field('content_width');?>
+ codex/create-acf-wrapper-functions
+<?php $content_width  = theme_get_field('content_width');?>
+
+<?php $content_width = function_exists('get_field') ? get_field('content_width') : '';?>
+ main
     <div id="primary" class="content-area">
         <main id="main" class="site-main  narrow has-bg <?php echo $content_width ?>" role="main">
 
@@ -16,7 +20,11 @@ get_header();
                         <div class="row">
                             <div class="contact-us col-md-8">
                                 <h3 class="widgettitle large">כתבו אלינו</h3>
-                                <?php  echo do_shortcode('[gravityform id=4 title=false description=true ajax=true]');?>
+                                <?php if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+                                    echo do_shortcode('[gravityform id=4 title=false description=true ajax=true]');
+                                } else {
+                                    echo '<p>Form could not be loaded.</p>';
+                                } ?>
                             </div>
                             <div class="contact-details col-md-4">
                                 <h3 class="widgettitle large"><span>פרטי</span> התקשרות</h3>

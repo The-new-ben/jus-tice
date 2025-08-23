@@ -133,6 +133,7 @@ function bones_scripts_and_styles() {
         wp_register_script('bootstrap-js', get_stylesheet_directory_uri() . '/library/js/min/bootstrap.min.js', array('jquery'), '', true);
         wp_register_script('bones-js', get_stylesheet_directory_uri() . '/library/js/script.js', array(), '', true);
         wp_script_add_data('bones-js', 'type', 'module');
+ codex/create-ai-endpoint-and-lawyer-card-module
         wp_localize_script(
             'bones-js',
             'aeroAi',
@@ -141,6 +142,9 @@ function bones_scripts_and_styles() {
                 'nonce'   => wp_create_nonce('aero_ai_nonce'),
             ]
         );
+
+        wp_register_script('vitals-js', get_stylesheet_directory_uri() . '/library/js/vitals.js', array(), '', true);
+ main
 
         // enqueue styles and scripts
         wp_enqueue_style('bootstrap-stylesheet');
@@ -168,6 +172,7 @@ function bones_scripts_and_styles() {
         wp_enqueue_script('bootstrap-select-js');
         wp_enqueue_script('popper');
         wp_enqueue_script('bones-js');
+        wp_enqueue_script('vitals-js');
         wp_enqueue_style('bootstrap-select-css');
 
 
