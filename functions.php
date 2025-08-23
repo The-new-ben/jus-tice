@@ -305,6 +305,39 @@ function category_trail_shortcode() {
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
+codex/filter-pre_get_document_title-for-singular-views
+function aero_index_document_title($title) {
+    if (is_singular()) {
+        $title = get_the_title(get_queried_object_id());
+    }
+    return $title;
+}
+add_filter('pre_get_document_title','aero_index_document_title');
+
+function aero_index_meta_tags() {
+    if (is_singular()) {
+        $post_obj = get_queried_object();
+        $description = '';
+        if ($post_obj) {
+            $description = wp_strip_all_tags(get_the_excerpt($post_obj));
+        }
+        $description = esc_attr($description);
+        $title = esc_attr(get_the_title($post_obj));
+        $url = esc_url(get_permalink($post_obj));
+        $site = esc_attr(get_bloginfo('name'));
+        echo '<meta name="description" content="' . $description . '">';
+        echo '<meta property="og:title" content="' . $title . '">';
+        echo '<meta property="og:description" content="' . $description . '">';
+        echo '<meta property="og:url" content="' . $url . '">';
+        echo '<meta property="og:site_name" content="' . $site . '">';
+        $image = get_the_post_thumbnail_url($post_obj, 'full');
+        if ($image) {
+            echo '<meta property="og:image" content="' . esc_url($image) . '">';
+        }
+    }
+}
+add_action('wp_head','aero_index_meta_tags');
+
 function jus_indexnow_register_settings() {
     register_setting('jus_indexnow', 'indexnow_api_key');
     register_setting('jus_indexnow', 'indexnow_host');
@@ -363,3 +396,4 @@ function jus_indexnow_submit_url($post_id, $post, $update) {
     ));
 }
 add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
