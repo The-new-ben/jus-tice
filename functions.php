@@ -24,6 +24,9 @@ require_once get_template_directory() . '/library/bones.php';                 //
 
 require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
+ codex/create-ai-endpoint-and-lawyer-card-module
+require_once get_template_directory() . '/inc/ai-endpoint.php';
+
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/blocks-loader.php';
  codex/register-_ai_meta-post-meta-with-rest-exposure
@@ -33,6 +36,7 @@ require_once get_template_directory() . '/inc/ai-meta.php';
 require_once get_template_directory() . '/inc/redirects.php';
 
 require_once get_template_directory() . '/inc/structured-data.php';
+ main
  main
  main
  main
