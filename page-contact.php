@@ -5,7 +5,11 @@
 
 get_header();
 ?>
-<?php $content_width  = get_field('content_width');?>
+ codex/create-acf-wrapper-functions
+<?php $content_width  = theme_get_field('content_width');?>
+
+<?php $content_width = function_exists('get_field') ? get_field('content_width') : '';?>
+ main
     <div id="primary" class="content-area">
         <main id="main" class="site-main  narrow has-bg <?php echo $content_width ?>" role="main">
 
