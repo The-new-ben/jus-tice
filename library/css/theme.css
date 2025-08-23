@@ -2288,4 +2288,8 @@ header {
   display: block;
 }
 
+.card__thumb img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;}
+.btn,[role="button"]{cursor:pointer;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;}
+
 /*# sourceMappingURL=theme.css.map */

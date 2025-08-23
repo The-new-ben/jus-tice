@@ -53,7 +53,7 @@
                 <div class="container">
                     <div class="d-sm-flex justify-content-end align-items-center">
                        <!--ul class="contact-details d-none d-md-flex">
-                           <li><?php echo get_field('site_address1', 'option'); ?></li>
+                           <li><?php echo function_exists('get_field') ? get_field('site_address1', 'option') : '' ?></li>
                            <li><?php get_template_part('template-parts/site-email'); ?></li>
                            <li><?php get_template_part('template-parts/site-phone'); ?></li>
                        </ul-->
@@ -65,11 +65,9 @@
                 <div class="d-flex justify-content-sm-between flex-column-reverse d-sm-row flex-sm-row">
                     <?php
                     $site_logo_url = '';
-                    if (function_exists('get_field')) {
-                        $logo_field = get_field('site_logo', 'option');
-                        if (!empty($logo_field['url'])) {
-                            $site_logo_url = $logo_field['url'];
-                        }
+                    $logo_field = function_exists('get_field') ? get_field('site_logo', 'option') : '';
+                    if (!empty($logo_field['url'])) {
+                        $site_logo_url = $logo_field['url'];
                     }
                     if (!$site_logo_url) {
                         $site_logo_url = get_template_directory_uri() . '/library/images/logo.png';
@@ -135,8 +133,8 @@
                         endif; ?>
                   
 				     </h1>
-					                    <?php if (get_field('subtitle')) {
-                        echo '<p class="subtitle">' . get_field('subtitle') . '</p>';
+<?php if (function_exists('get_field') && get_field('subtitle')) {
+                        echo '<p class="subtitle">' . (function_exists('get_field') ? get_field('subtitle') : '') . '</p>';
                     } ?>
 															
                     <?php if (is_home()) echo '<p class="subtitle">עורכי הדין המומלצים </p>'; ?>

@@ -1,4 +1,5 @@
 <?php
+ codex/convert-line-endings-and-register-post-types
 function register_theme_post_types() {
     register_post_type('articles', array(
         'public' => true,
@@ -25,3 +26,16 @@ function theme_flush_rewrite() {
     flush_rewrite_rules();
 }
 add_action('after_switch_theme','theme_flush_rewrite');
+
+add_action('init', function () {
+    $lawyer_meta = ['phone', 'email', 'website', 'linkedin', 'office_location'];
+    foreach ($lawyer_meta as $key) {
+        register_post_meta('lawyers', $key, [
+            'type' => 'string',
+            'single' => true,
+            'show_in_rest' => true,
+            'sanitize_callback' => 'sanitize_text_field',
+        ]);
+    }
+});
+ main
