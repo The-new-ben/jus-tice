@@ -93,10 +93,94 @@ function bones_custom_image_sizes( $sizes ) {
  * 5. Theme Customizer (ניתן להרחבה)
  * --------------------------------------------------------------------------- */
 function bones_theme_customizer( $wp_customize ) {
-  // להוספת הגדרות/בקרות בהתאמה אישית
-  // $wp_customize->remove_section('title_tagline'); // דוגמה להסרה
+  $wp_customize->add_section('business_info', array(
+    'title' => __( 'Business Info', 'bonestheme' ),
+    'priority' => 30
+  ));
+  $wp_customize->add_setting('business_name', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_name', array(
+    'label' => __( 'Business Name', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_address', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_address', array(
+    'label' => __( 'Address', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_phone', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_phone', array(
+    'label' => __( 'Phone', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_email', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_email', array(
+    'label' => __( 'Email', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_hours', array('sanitize_callback' => 'sanitize_textarea_field'));
+  $wp_customize->add_control('business_hours', array(
+    'label' => __( 'Opening Hours', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'textarea'
+  ));
+  $wp_customize->add_setting('business_lat', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_lat', array(
+    'label' => __( 'Latitude', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
+  $wp_customize->add_setting('business_lng', array('sanitize_callback' => 'sanitize_text_field'));
+  $wp_customize->add_control('business_lng', array(
+    'label' => __( 'Longitude', 'bonestheme' ),
+    'section' => 'business_info',
+    'type' => 'text'
+  ));
 }
 add_action( 'customize_register', 'bones_theme_customizer' );
+
+function bones_local_business_schema() {
+  $name = get_theme_mod('business_name');
+  $address = get_theme_mod('business_address');
+  $phone = get_theme_mod('business_phone');
+  $email = get_theme_mod('business_email');
+  $hours = get_theme_mod('business_hours');
+  $lat = get_theme_mod('business_lat');
+  $lng = get_theme_mod('business_lng');
+  if ($name || $address || $phone || $email || $hours || ($lat && $lng)) {
+    $data = array(
+      '@context' => 'https://schema.org',
+      '@type' => 'LocalBusiness'
+    );
+    if ($name) {
+      $data['name'] = $name;
+    }
+    if ($address) {
+      $data['address'] = $address;
+    }
+    if ($phone) {
+      $data['telephone'] = $phone;
+    }
+    if ($email) {
+      $data['email'] = $email;
+    }
+    if ($hours) {
+      $data['openingHours'] = $hours;
+    }
+    if ($lat && $lng) {
+      $data['geo'] = array(
+        '@type' => 'GeoCoordinates',
+        'latitude' => $lat,
+        'longitude' => $lng
+      );
+    }
+    echo '<script type="application/ld+json">' . wp_json_encode($data) . '</script>';
+  }
+}
+add_action('wp_head', 'bones_local_business_schema');
 
 /* ---------------------------------------------------------------------------
  * 6. Sidebars & Widget Areas
