@@ -402,28 +402,15 @@ function change_post_object_label() {
 add_action( 'init', 'change_post_object_label' );
 add_action( 'admin_menu', 'change_post_menu_label' );
 
-/* ---------------------------------------------------------------------------
- * 17. דוגמה לטעינת סקריפטים משלכם
- * --------------------------------------------------------------------------- */
-function my_theme_scripts() {
-    // Enqueue jQuery (נטען בדפדפן אוטומטית בוורדפרס, אך אם צריך ידנית, זהו המקום)
+function jus_tice_scripts() {
+    wp_deregister_script('jquery');
+    wp_register_script('jquery','https://code.jquery.com/jquery-3.6.0.min.js',array(),null,true);
     wp_enqueue_script('jquery');
-
-    // Enqueue custom script (ודאו שהנתיב קיים)
-    // פרמטר אחרון true -> הטעינה תתרחש לפני סגירת </body> (מומלץ)
-    wp_enqueue_script(
-      'my-script',
-      get_template_directory_uri() . '/path/to/your/script.js',
-      array('jquery'),
-      '1.0.0',
-      true
-    );
+    wp_enqueue_script('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js',array('jquery'),null,true);
+    wp_enqueue_script('theme-main',get_template_directory_uri().'/script.js',array('jquery'),null,true);
 }
-add_action('wp_enqueue_scripts', 'my_theme_scripts');
+add_action('wp_enqueue_scripts','jus_tice_scripts');
 
-/* ---------------------------------------------------------------------------
- * 18. שורטקוד category-trail (דוגמה)
- * --------------------------------------------------------------------------- */
 function category_trail_shortcode() {
     $categories = get_the_category();
     $output = '';
