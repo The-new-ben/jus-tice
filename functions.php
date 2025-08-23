@@ -21,10 +21,14 @@ require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/blocks-loader.php';
+ codex/register-_ai_meta-post-meta-with-rest-exposure
+require_once get_template_directory() . '/inc/ai-meta.php';
+
  codex/log-404-requests-in-custom-table
 require_once get_template_directory() . '/inc/redirects.php';
 
 require_once get_template_directory() . '/inc/structured-data.php';
+ main
  main
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
