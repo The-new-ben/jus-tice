@@ -304,3 +304,28 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+function justice_rel_links() {
+    if (is_singular()) {
+        $u = get_permalink();
+        echo '<link rel="canonical" href="' . esc_url($u) . '">';
+        $langs = function_exists('pll_languages_list') ? pll_languages_list() : (function_exists('icl_get_languages') ? array_keys(icl_get_languages()) : get_available_languages());
+        if (is_array($langs) && count($langs) > 1) {
+            foreach ($langs as $code) {
+                $link = $u;
+                if (function_exists('pll_get_post')) {
+                    $p = pll_get_post(get_the_ID(), $code);
+                    if ($p) {
+                        $link = get_permalink($p);
+                    }
+                } elseif (function_exists('icl_object_id')) {
+                    $link = apply_filters('wpml_permalink', $u, $code);
+                } else {
+                    $link = add_query_arg('lang', $code, $u);
+                }
+                echo '<link rel="alternate" hreflang="' . esc_attr($code) . '" href="' . esc_url($link) . '">';
+            }
+        }
+    }
+}
+add_action('wp_head','justice_rel_links');
