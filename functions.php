@@ -24,6 +24,9 @@ require_once get_template_directory() . '/library/bones.php';                 //
 
 require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
+ codex/create-and-enqueue-scripts-in-enqueue-scripts.php
+require_once get_template_directory() . '/inc/enqueue-scripts.php';
+
  codex/create-ai-endpoint-and-lawyer-card-module
 require_once get_template_directory() . '/inc/ai-endpoint.php';
 
@@ -36,6 +39,7 @@ require_once get_template_directory() . '/inc/ai-meta.php';
 require_once get_template_directory() . '/inc/redirects.php';
 
 require_once get_template_directory() . '/inc/structured-data.php';
+ main
  main
  main
  main
@@ -56,9 +60,6 @@ function bones_ahoy() {
   add_filter( 'wp_head', 'bones_remove_wp_widget_recent_comments_style', 1 );
   add_action( 'wp_head', 'bones_remove_recent_comments_style', 1 );
   add_filter( 'gallery_style', 'bones_gallery_style' );
-
-  // טעינת סקריפטים וסגנונות
-  add_action( 'wp_enqueue_scripts', 'bones_scripts_and_styles', 999 );
 
   // תמיכה בפיצ'רים של וורדפרס (תמונות פיצ'ר, פורמטים וכו')
   bones_theme_support();
