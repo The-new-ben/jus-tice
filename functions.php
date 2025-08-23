@@ -4,12 +4,17 @@
  * URL: http://themble.com/bones/
  *
  * זהו קובץ ה-functions.php של התבנית, המכיל הגדרות ופעולות ליבה.
- * חלק מהפונקציות (bones.php) נטענות דרך require_once למטה.
  */
 
 /* ---------------------------------------------------------------------------
  * 1. REQUIRE או INCLUDE לקבצים נוספים
  * --------------------------------------------------------------------------- */
+
+ codex/move-custom-post-types-file-and-update-includes
+require_once get_template_directory() . '/inc/enqueue-scripts.php';
+require_once get_template_directory() . '/inc/custom-post-types.php';
+require_once get_template_directory() . '/inc/helpers.php';
+require_once get_template_directory() . '/inc/acf-compatibility.php';
 
 require_once get_template_directory() . '/inc/custom-post-types.php'; // CPTs מותאמים
 require_once get_template_directory() . '/library/bones.php';                 // ליבת Bones
@@ -28,6 +33,7 @@ require_once get_template_directory() . '/inc/ai-meta.php';
 require_once get_template_directory() . '/inc/redirects.php';
 
 require_once get_template_directory() . '/inc/structured-data.php';
+ main
  main
  main
 /* ---------------------------------------------------------------------------
@@ -454,7 +460,7 @@ function ai_store_vitals(WP_REST_Request $r){
     return rest_ensure_response(array('ok'=>true));
 }
 
-=======
+
  codex/add-canonical-and-alternate-tags
 function justice_rel_links() {
     if (is_singular()) {
