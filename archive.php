@@ -24,7 +24,7 @@ $term = get_queried_object();
                                         role="article">
                                     <span class="date"><?php echo get_the_time('d.m.y')?></span>
                                     <h3><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h3>
-                                    <p><?php echo excerpt(15); ?></p>
+                                    <p><?php echo wp_trim_words(get_the_excerpt(), 15, '...'); ?></p>
                                     <a class="more" href="<?php the_permalink(); ?>"><i
                                                 class="ion-ios-arrow-thin-left"></i></a>
                                 </article>

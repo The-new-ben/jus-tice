@@ -15,7 +15,7 @@
 <?php
     $recent_articles = new WP_Query(array(
         'post_type' => 'articles',
-        'orderby' => 'post_parent__in',
+        'orderby' => 'post__in',
         'order' => 'relevance',
         'posts_per_page' =>5,
     ));
@@ -24,16 +24,35 @@
         <div class="widget articles">
             <h4 class="widgettitle">המלצות</h4>
             <ul>
+ codex/add-checks-for-gfforms-existence
 				<?php
 				while ($recent_articles->have_posts()) : $recent_articles->the_post();
 				get_template_part('template-parts/article-mini-box');
 				endwhile; ?>
 			</ul>
 	</div>
+        <div class="widget">
+                <h4 class="widgettitle">צרו קשר</h4>
+                <?php if ( class_exists( 'GFForms' ) || function_exists( 'gravity_form' ) ) {
+                    echo do_shortcode('[gravityform id=1 title=false description=true ajax=true]');
+                } else {
+                    echo '<p>Form could not be loaded.</p>';
+                } ?>
+        </div>
+
+                                <?php
+                                while ($recent_articles->have_posts()) : $recent_articles->the_post();
+                                get_template_part('template-parts/article-mini-box');
+                                endwhile;
+                                wp_reset_postdata();
+                                ?>
+                        </ul>
+        </div>
 	<div class="widget">
 		<h4 class="widgettitle">צרו קשר</h4>
 		<?php echo do_shortcode('[gravityform id=1 title=false description=true ajax=true]'); ?>
 	</div>
+ main
 	
 	<div>
 		<?php  
@@ -163,13 +182,18 @@
         </div>
     <?php endif;  ?>
    
-    <?php $side_banner= get_field('side_banner', 'option');
+ codex/create-acf-wrapper-functions
+    <?php $side_banner= theme_get_field('side_banner', 'option');
+
+    <?php $side_banner = function_exists('get_field') ? get_field('side_banner', 'option') : '';
+    $side_banner_link = function_exists('get_field') ? get_field('side_banner_link', 'option') : '';
+ main
     if($side_banner):
     ?>
 
     <div class="widget banner">
-        <a href="<?= $side_banner_link['url'] ?>">
-            <img src="<?php echo $side_banner['url']; ?>" alt="<?php echo $side_banner['alt']; ?>"/>
+        <a href="<?= esc_url( $side_banner_link['url'] ?? '' ) ?>">
+            <img src="<?php echo $side_banner['url'] ?? ''; ?>" alt="<?php echo $side_banner['alt'] ?? ''; ?>"/>
         </a>
     </div>
     <?php endif;?>

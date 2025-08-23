@@ -5,31 +5,31 @@ get_header();
 ?>
 <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-        <?php if (have_rows('new_section')):
+        <?php if (theme_have_rows('new_section')):
             $i = 1;
-            while (have_rows('new_section')) : the_row();
-                $section_title = get_sub_field('section_title');
-                $section_class = get_sub_field('section_class');
-                $section_layout = get_sub_field('section_layout');
-                $section_direction = get_sub_field('section_direction');
+            while (theme_have_rows('new_section')) : theme_the_row();
+                $section_title = theme_get_sub_field('section_title');
+                $section_class = theme_get_sub_field('section_class');
+                $section_layout = theme_get_sub_field('section_layout');
+                $section_direction = theme_get_sub_field('section_direction');
                 echo '<section class="' . $section_class . '">';
                 echo '<div class="' . $section_layout . '">';
                 if ($section_title)echo '<div class="section-title"><h2 class="title">' . $section_title . '</h2></div>';
                 echo '<div class="row d-md-flex flex-wrap flex-md-'.$section_direction.'">';
-                    if (have_rows('new_column')):
+                    if (theme_have_rows('new_column')):
 
-                      while (have_rows('new_column')): the_row();
-                         $column_num = get_sub_field('column_num');
+                      while (theme_have_rows('new_column')): theme_the_row();
+                         $column_num = theme_get_sub_field('column_num');
                          $col = 12 / $column_num;
-                          $column_type =  get_sub_field('column_type');
-                          $column_text =  get_sub_field('column_text');
-                          $column_img =  get_sub_field('column_img');
+                          $column_type =  theme_get_sub_field('column_type');
+                          $column_text =  theme_get_sub_field('column_text');
+                          $column_img =  theme_get_sub_field('column_img');
                         echo '<div class="item col-md-' . $col . '">';
                          if ($column_type == 'img'):
                         echo '<div class="image-container"><img src="' . $column_img['url'] . '" alt="' . $column_img['alt'] . '"/></div>';
                         elseif ($column_type == 'video') :
                             // get iframe HTML
-                            $iframe = get_sub_field('column_video');
+                            $iframe = theme_get_sub_field('column_video');
                         // use preg_match to find iframe src
                             preg_match('/src="(.+?)"/', $iframe, $matches);
                             $src = $matches[1];

@@ -1,0 +1,13 @@
+{
+  "apiVersion": 2,
+  "name": "aero/lawyer-card",
+  "title": "Lawyer Card",
+  "category": "widgets",
+  "icon": "id",
+  "description": "Displays a lawyer card.",
+  "supports": { "html": false },
+  "attributes": {
+    "lawyerId": { "type": "integer", "default": 0 }
+  },
+  "editorScript": "file:./index.js"
+}
