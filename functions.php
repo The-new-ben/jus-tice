@@ -304,3 +304,11 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+function theme_styles(){
+  wp_enqueue_style('theme-root', get_stylesheet_uri());
+  wp_enqueue_style('theme-base', get_template_directory_uri().'/base.css', array('theme-root'));
+  wp_enqueue_style('theme-layout', get_template_directory_uri().'/layout.css', array('theme-base'));
+  wp_enqueue_style('theme-components', get_template_directory_uri().'/components.css', array('theme-layout'));
+}
+add_action('wp_enqueue_scripts','theme_styles');
