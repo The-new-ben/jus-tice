@@ -17,6 +17,15 @@ get_header();
                         <header class="lawyer-header">
                             <h2 class="title small"><?php the_title(); ?></h2>
                             <?php
+ codex/create-acf-wrapper-functions
+                            $phone = theme_get_field('profile_phone');
+                            $whatsapp = theme_get_field('profile_whatsapp');
+                            $facebook = theme_get_field('profile_facebook');
+                            $linkedin = theme_get_field('profile_linkedin');
+                            $twitter = theme_get_field('profile_twitter');
+                            $availability = theme_get_field('availability');
+                            $iframe = theme_get_field('profile_video');
+
                             $phone = function_exists('get_field') ? get_field('profile_phone') : '';
                             $whatsapp = function_exists('get_field') ? get_field('profile_whatsapp') : '';
                             $facebook = function_exists('get_field') ? get_field('profile_facebook') : '';
@@ -24,6 +33,7 @@ get_header();
                             $twitter = function_exists('get_field') ? get_field('profile_twitter') : '';
                             $availability = function_exists('get_field') ? get_field('availability') : '';
                             $iframe = function_exists('get_field') ? get_field('profile_video') : '';
+ main
                             if ($phone) { ?>
                                 <div class="phone d-flex align-items-center">
                                     <a class="tel" href="tel:<?php echo $phone ?>"><?php echo $phone ?></a>
@@ -52,7 +62,11 @@ get_header();
                             <div class="row">
 
                                 <?php
+ codex/create-acf-wrapper-functions
+                                $post_objects = theme_get_field('profile_articles');
+
                                 $post_objects = function_exists('get_field') ? get_field('profile_articles') : '';
+ main
                                 if ($post_objects): ?>
                                     <div class="col-auto col-md-6 related">
                                         <div class="section-title small">

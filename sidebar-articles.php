@@ -165,8 +165,12 @@
         </div>
     <?php endif;  ?>
    
+ codex/create-acf-wrapper-functions
+    <?php $side_banner= theme_get_field('side_banner', 'option');
+
     <?php $side_banner = function_exists('get_field') ? get_field('side_banner', 'option') : '';
     $side_banner_link = function_exists('get_field') ? get_field('side_banner_link', 'option') : '';
+ main
     if($side_banner):
     ?>
 

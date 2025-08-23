@@ -14,6 +14,24 @@ function aero_index_safe_count( $var ) {
     return is_countable( $var ) ? count( $var ) : 0;
 }
 
+ codex/create-acf-wrapper-functions
+function theme_get_field($selector, $post_id = false, $format_value = true) {
+    return function_exists('get_field') ? get_field($selector, $post_id, $format_value) : null;
+}
+
+function theme_have_rows($selector, $post_id = false) {
+    return function_exists('have_rows') ? have_rows($selector, $post_id) : false;
+}
+
+function theme_get_sub_field($selector, $format_value = true) {
+    return function_exists('get_sub_field') ? get_sub_field($selector, $format_value) : null;
+}
+
+function theme_the_row() {
+    if (function_exists('the_row')) {
+        the_row();
+    }
+
 function bones_head_cleanup() {
     remove_action( 'wp_head', 'rsd_link' );
     remove_action( 'wp_head', 'wlwmanifest_link' );
@@ -131,4 +149,5 @@ function bones_filter_ptags_on_images( $content ) {
 function bones_excerpt_more( $more ) {
     global $post;
     return '...  <a class="excerpt-read-more" href="' . get_permalink( $post->ID ) . '" title="' . __( 'Read ', 'bonestheme' ) . esc_attr( get_the_title( $post->ID ) ) . '">' . __( 'Read more &raquo;', 'bonestheme' ) . '</a>';
+ main
 }
