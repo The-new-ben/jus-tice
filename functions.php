@@ -304,3 +304,67 @@ function category_trail_shortcode() {
     return $output;
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
+
+add_action('add_attachment', 'jt_populate_image_alt');
+function jt_populate_image_alt($post_id) {
+    $post = get_post($post_id);
+    if (!$post) {
+        return;
+    }
+    if (strpos($post->post_mime_type, 'image/') !== 0) {
+        return;
+    }
+    $alt = get_post_meta($post_id, '_wp_attachment_image_alt', true);
+    if ($alt) {
+        return;
+    }
+    $title = get_the_title($post_id);
+    if ($title) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', sanitize_text_field($title));
+        return;
+    }
+    $description = jt_generate_image_description($post_id);
+    if ($description) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', $description);
+    }
+}
+
+function jt_generate_image_description($post_id) {
+    $path = get_attached_file($post_id);
+    if (!$path || !file_exists($path)) {
+        return '';
+    }
+    $data = file_get_contents($path);
+    if (!$data) {
+        return '';
+    }
+    $body = [
+        'model' => 'gpt-4o-mini',
+        'input' => [[
+            'role' => 'user',
+            'content' => [
+                ['type' => 'input_text', 'text' => 'Describe this image for alt text'],
+                ['type' => 'input_image', 'image_base64' => base64_encode($data)]
+            ]
+        ]],
+        'max_output_tokens' => 150
+    ];
+    $response = wp_remote_post('https://api.openai.com/v1/responses', [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . getenv('OPENAI_API_KEY')
+        ],
+        'body' => wp_json_encode($body),
+        'timeout' => 60
+    ]);
+    if (is_wp_error($response)) {
+        return '';
+    }
+    $body = wp_remote_retrieve_body($response);
+    if (!$body) {
+        return '';
+    }
+    $data = json_decode($body, true);
+    $text = $data['output'][0]['content'][0]['text'] ?? '';
+    return sanitize_text_field($text);
+}
