@@ -21,6 +21,15 @@ require_once get_template_directory() . '/inc/acf-compatibility.php';
 require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/custom-post-types.php';
 require_once get_template_directory() . '/inc/blocks-loader.php';
+ codex/register-_ai_meta-post-meta-with-rest-exposure
+require_once get_template_directory() . '/inc/ai-meta.php';
+
+ codex/log-404-requests-in-custom-table
+require_once get_template_directory() . '/inc/redirects.php';
+
+require_once get_template_directory() . '/inc/structured-data.php';
+ main
+ main
 /* ---------------------------------------------------------------------------
  * 2. הפעלת התבנית (after_setup_theme)
  * --------------------------------------------------------------------------- */
@@ -305,6 +314,7 @@ function category_trail_shortcode() {
 }
 add_shortcode( 'category-trail', 'category_trail_shortcode' );
 
+ codex/add-canonical-and-alternate-tags
 function justice_rel_links() {
     if (is_singular()) {
         $u = get_permalink();
@@ -329,3 +339,263 @@ function justice_rel_links() {
     }
 }
 add_action('wp_head','justice_rel_links');
+
+ codex/register-post-meta-for-variant-titles
+add_action('init',function(){
+    register_post_meta('', '_ab_h1', ['show_in_rest'=>true,'single'=>true,'type'=>'string','auth_callback'=>function(){return current_user_can('edit_posts');}]);
+});
+
+add_action('wp',function(){
+    if(!is_singular())return;
+    $id=get_queried_object_id();
+    $meta=get_post_meta($id,'_ab_h1',true);
+    if(!$meta)return;
+    $variants=array_map('trim',preg_split("/\r\n|\r|\n/",$meta));
+    if(count($variants)<2)return;
+    $key='ab_h1_'.$id;
+    if(!isset($_COOKIE[$key])){
+        $index=array_rand($variants);
+        setcookie($key,$index,time()+2592000,COOKIEPATH,COOKIE_DOMAIN);
+        $_COOKIE[$key]=$index;
+    }
+    $GLOBALS['ab_h1_variant']=$variants[$_COOKIE[$key]];
+});
+
+add_filter('the_title',function($title,$post_id){
+    if(!is_singular()||$post_id!==get_the_ID())return $title;
+    if(!empty($GLOBALS['ab_h1_variant']))return $GLOBALS['ab_h1_variant'];
+    return $title;
+},10,2);
+
+ codex/add-alt-text-for-images-without-description
+add_action('add_attachment', 'jt_populate_image_alt');
+function jt_populate_image_alt($post_id) {
+    $post = get_post($post_id);
+    if (!$post) {
+        return;
+    }
+    if (strpos($post->post_mime_type, 'image/') !== 0) {
+        return;
+    }
+    $alt = get_post_meta($post_id, '_wp_attachment_image_alt', true);
+    if ($alt) {
+        return;
+    }
+    $title = get_the_title($post_id);
+    if ($title) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', sanitize_text_field($title));
+        return;
+    }
+    $description = jt_generate_image_description($post_id);
+    if ($description) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', $description);
+    }
+}
+
+function jt_generate_image_description($post_id) {
+    $path = get_attached_file($post_id);
+    if (!$path || !file_exists($path)) {
+        return '';
+    }
+    $data = file_get_contents($path);
+    if (!$data) {
+        return '';
+    }
+    $body = [
+        'model' => 'gpt-4o-mini',
+        'input' => [[
+            'role' => 'user',
+            'content' => [
+                ['type' => 'input_text', 'text' => 'Describe this image for alt text'],
+                ['type' => 'input_image', 'image_base64' => base64_encode($data)]
+            ]
+        ]],
+        'max_output_tokens' => 150
+    ];
+    $response = wp_remote_post('https://api.openai.com/v1/responses', [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . getenv('OPENAI_API_KEY')
+        ],
+        'body' => wp_json_encode($body),
+        'timeout' => 60
+    ]);
+    if (is_wp_error($response)) {
+        return '';
+    }
+    $body = wp_remote_retrieve_body($response);
+    if (!$body) {
+        return '';
+    }
+    $data = json_decode($body, true);
+    $text = $data['output'][0]['content'][0]['text'] ?? '';
+    return sanitize_text_field($text);
+}
+
+ codex/extend-wp-core-sitemaps-with-custom-post-types
+add_filter('wp_sitemaps_post_types', function($post_types){
+    $post_types['articles'] = 'articles';
+    $post_types['lawyers'] = 'lawyers';
+    return $post_types;
+});
+
+add_action('init', function(){
+    add_rewrite_rule('feed/json/?$', 'index.php?json_feed=1', 'top');
+});
+
+add_filter('query_vars', function($vars){
+    $vars[] = 'json_feed';
+    return $vars;
+});
+
+add_action('template_redirect', function(){
+    if (get_query_var('json_feed')) {
+        $posts = get_posts(['numberposts' => 10, 'post_status' => 'publish']);
+        $items = [];
+        foreach ($posts as $p) {
+            $items[] = [
+                'id' => $p->ID,
+                'title' => get_the_title($p),
+                'link' => get_permalink($p),
+                'date' => get_the_date('c', $p),
+            ];
+        }
+        wp_send_json(['items' => $items]);
+    }
+});
+
+ codex/define-root-level-variables-in-style.css
+function theme_styles(){
+  wp_enqueue_style('theme-root', get_stylesheet_uri());
+  wp_enqueue_style('theme-base', get_template_directory_uri().'/base.css', array('theme-root'));
+  wp_enqueue_style('theme-layout', get_template_directory_uri().'/layout.css', array('theme-base'));
+  wp_enqueue_style('theme-components', get_template_directory_uri().'/components.css', array('theme-layout'));
+}
+add_action('wp_enqueue_scripts','theme_styles');
+
+ codex/add-related-posts-block-after-first-h2
+function related_links_block($content) {
+    if (!is_singular('post')) {
+        return $content;
+    }
+    global $post;
+    $related = get_posts(array(
+        's' => $post->post_title,
+        'post__not_in' => array($post->ID),
+        'posts_per_page' => 5
+    ));
+    if (!$related) {
+        return $content;
+    }
+    $html = '<div class="related-links"><h2>Related Posts</h2><ul>';
+    foreach ($related as $p) {
+        $html .= '<li><a href="' . get_permalink($p) . '">' . esc_html(get_the_title($p)) . '</a></li>';
+    }
+    $html .= '</ul></div>';
+    if (strpos($content, '<h2') !== false) {
+        $content = preg_replace('/(<h2[^>]*>.*?<\/h2>)/i', '$1' . $html, $content, 1);
+    } else {
+        $content .= $html;
+    }
+    return $content;
+}
+add_filter('the_content', 'related_links_block');
+
+codex/filter-pre_get_document_title-for-singular-views
+function aero_index_document_title($title) {
+    if (is_singular()) {
+        $title = get_the_title(get_queried_object_id());
+    }
+    return $title;
+}
+add_filter('pre_get_document_title','aero_index_document_title');
+
+function aero_index_meta_tags() {
+    if (is_singular()) {
+        $post_obj = get_queried_object();
+        $description = '';
+        if ($post_obj) {
+            $description = wp_strip_all_tags(get_the_excerpt($post_obj));
+        }
+        $description = esc_attr($description);
+        $title = esc_attr(get_the_title($post_obj));
+        $url = esc_url(get_permalink($post_obj));
+        $site = esc_attr(get_bloginfo('name'));
+        echo '<meta name="description" content="' . $description . '">';
+        echo '<meta property="og:title" content="' . $title . '">';
+        echo '<meta property="og:description" content="' . $description . '">';
+        echo '<meta property="og:url" content="' . $url . '">';
+        echo '<meta property="og:site_name" content="' . $site . '">';
+        $image = get_the_post_thumbnail_url($post_obj, 'full');
+        if ($image) {
+            echo '<meta property="og:image" content="' . esc_url($image) . '">';
+        }
+    }
+}
+add_action('wp_head','aero_index_meta_tags');
+
+function jus_indexnow_register_settings() {
+    register_setting('jus_indexnow', 'indexnow_api_key');
+    register_setting('jus_indexnow', 'indexnow_host');
+}
+add_action('admin_init', 'jus_indexnow_register_settings');
+
+function jus_indexnow_add_options_page() {
+    add_options_page('IndexNow', 'IndexNow', 'manage_options', 'jus-indexnow', 'jus_indexnow_render_settings');
+}
+add_action('admin_menu', 'jus_indexnow_add_options_page');
+
+function jus_indexnow_render_settings() {
+    ?>
+    <div class="wrap">
+        <h1>IndexNow</h1>
+        <form method="post" action="options.php">
+            <?php settings_fields('jus_indexnow'); ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><label for="indexnow_api_key">API Key</label></th>
+                    <td><input name="indexnow_api_key" type="text" id="indexnow_api_key" value="<?php echo esc_attr(get_option('indexnow_api_key')); ?>" class="regular-text" /></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="indexnow_host">Host</label></th>
+                    <td><input name="indexnow_host" type="text" id="indexnow_host" value="<?php echo esc_attr(get_option('indexnow_host')); ?>" class="regular-text" /></td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
+
+function jus_indexnow_submit_url($post_id, $post, $update) {
+    if (wp_is_post_revision($post_id)) {
+        return;
+    }
+    if ($post->post_status !== 'publish') {
+        return;
+    }
+    $key = get_option('indexnow_api_key');
+    $host = get_option('indexnow_host');
+    if (!$key || !$host) {
+        return;
+    }
+    $url = get_permalink($post_id);
+    $body = array(
+        'host' => $host,
+        'key' => $key,
+        'urlList' => array($url)
+    );
+    wp_remote_post('https://www.bing.com/indexnow', array(
+        'headers' => array('Content-Type' => 'application/json'),
+        'body' => wp_json_encode($body),
+        'timeout' => 10
+    ));
+}
+add_action('save_post', 'jus_indexnow_submit_url', 10, 3);
+ main
+ main
+ main
+ main
+ main
+ main
+ main
