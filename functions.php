@@ -38,6 +38,8 @@ require_once get_template_directory() . '/inc/ai-meta.php';
  codex/log-404-requests-in-custom-table
 require_once get_template_directory() . '/inc/redirects.php';
 
+require_once get_template_directory() . '/inc/term-external-links.php';
+
 require_once get_template_directory() . '/inc/structured-data.php';
  main
  main
